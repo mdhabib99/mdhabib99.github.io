@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markopolo.ai | Interactive Customer Success Plan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm & Authoritative -->
+    <!-- Application Structure Plan: The SPA is structured as an interactive strategic brief, guiding a user (e.g., a Markopolo.ai executive) from a high-level problem overview to a detailed action plan. The architecture uses four thematic sections navigated by a sticky header: 1. **Dashboard** for an instant snapshot of the problem's scale. 2. **Deep Dive** for interactive root cause analysis, linking quantitative data directly to qualitative insights. 3. **The Plan** to clearly present the proposed solutions in an organized, explorable format. 4. **Impact** to visualize the expected outcomes and define success. This structure was chosen over a linear report format to facilitate non-linear exploration and to make the connections between data, analysis, and strategy immediately apparent and engaging for a busy stakeholder. -->
+    <!-- Visualization & Content Choices: 
+        - Trial Outcomes (Dashboard): Goal: Inform. Viz: Donut Chart (Chart.js). Interaction: None. Justification: Provides a high-impact, immediate visual summary of the core conversion vs. drop-off problem. (NO SVG/Mermaid).
+        - Funnel Breakdown (Deep Dive): Goal: Compare/Organize. Viz: Interactive Bar Chart (Chart.js) linked to a dynamic 'Diagnosis' panel (JS/HTML). Interaction: Clicking a bar segment updates the panel with corresponding qualitative data (challenges, user feedback, analysis questions). Justification: Creates a powerful, interactive link between the 'what' (the data) and the 'why' (the analysis), fostering deeper understanding than static charts. (NO SVG/Mermaid).
+        - Proposed Solutions (The Plan): Goal: Organize/Inform. Presentation: Interactive Cards (HTML/CSS/JS). Interaction: Clicking a card reveals detailed information. Justification: Keeps the high-level strategy clean and digestible, while allowing users to drill down into specifics as needed. (NO SVG/Mermaid).
+        - KPIs (Impact): Goal: Inform/Compare. Viz: Gauge-style Donut Chart (Chart.js) and simple text blocks. Interaction: None. Justification: Clearly visualizes the delta between the current state and the goal for key success metrics. (NO SVG/Mermaid).
+        - Communications (Impact): Goal: Inform. Presentation: Tabbed content display (HTML/CSS/JS). Interaction: Clicking tabs switches the visible content. Justification: Neatly packages supplementary text content without cluttering the main strategic narrative. (NO SVG/Mermaid).
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F9FA;
+            color: #333333;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link-active {
+            color: #4A90E2;
+            border-bottom-color: #4A90E2;
+        }
+        .solution-card.active {
+            border-color: #4A90E2;
+            box-shadow: 0 4px 14px 0 rgba(74, 144, 226, 0.3);
+        }
+        .tab-btn.active {
+            background-color: #4A90E2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header id="main-header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="font-bold text-xl text-[#4A90E2]">Markopolo.ai</span>
+                    <span class="ml-2 font-semibold text-gray-600">Success Plan</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#dashboard" class="nav-link text-gray-500 hover:text-[#4A90E2] px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Dashboard</a>
+                        <a href="#deep-dive" class="nav-link text-gray-500 hover:text-[#4A90E2] px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Deep Dive</a>
+                        <a href="#the-plan" class="nav-link text-gray-500 hover:text-[#4A90E2] px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">The Plan</a>
+                        <a href="#impact" class="nav-link text-gray-500 hover:text-[#4A90E2] px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Impact</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <section id="dashboard" class="mb-16">
+            <h1 class="text-4xl font-bold text-center mb-2">State of the Trial: A Dashboard View</h1>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-10">This dashboard provides a high-level overview of the 14-day trial funnel's performance over the last three months, based on 1,847 new sign-ups. The key takeaway is a significant opportunity for growth by addressing user drop-off.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <div class="lg:col-span-1 bg-white p-8 rounded-lg shadow-lg text-center">
+                    <h3 class="text-lg font-semibold text-gray-500 uppercase">Total Trial Drop-off Rate</h3>
+                    <p class="text-8xl font-black text-[#E94E77] my-4">80%</p>
+                    <p class="text-gray-600">Four out of five users who start a trial do not convert to a paid plan, indicating critical friction points in the early user journey.</p>
+                </div>
+                <div class="lg:col-span-2 bg-white p-8 rounded-lg shadow-lg">
+                     <h3 class="text-xl font-bold text-center mb-4">Final Trial Outcomes</h3>
+                     <div class="chart-container">
+                        <canvas id="outcomesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="deep-dive" class="mb-16">
+            <h2 class="text-4xl font-bold text-center mb-2">Deep Dive: Where We Lose Users</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-10">To solve the drop-off problem, we must first understand it. This section interactively connects the funnel data to its root cause analysis. Click on a bar in the chart to explore the diagnosis for that user segment.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold text-center mb-4">Trial Funnel Breakdown (% of All Sign-ups)</h3>
+                    <div class="chart-container" style="height: 400px;">
+                        <canvas id="funnelChart"></canvas>
+                    </div>
+                </div>
+                <div id="diagnosis-panel" class="bg-white p-6 rounded-lg shadow-lg">
+                    
+                </div>
+            </div>
+        </section>
+
+        <section id="the-plan" class="mb-16">
+            <h2 class="text-4xl font-bold text-center mb-2">The Plan: A 3-Pronged Strategy for Growth</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-10">Based on the analysis, this section outlines a proactive, multi-faceted customer success strategy. Each initiative is designed to address a specific friction point, guide users to their "Aha!" moment, and build confidence. Click each card to learn more.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div id="solution-card-1" class="solution-card bg-white p-6 rounded-lg shadow-md cursor-pointer border-2 border-transparent transition-all">
+                    <div class="flex items-center mb-4">
+                        <div class="text-3xl mr-4">✅</div>
+                        <h3 class="text-xl font-bold">Guided Onboarding</h3>
+                    </div>
+                    <p>Address the initial activation barrier by simplifying the first-run experience.</p>
+                    <div class="solution-details hidden mt-4 pt-4 border-t">
+                        <p class="font-semibold">Initiative:</p>
+                        <p>Implement an in-app, step-by-step "First Campaign Wizard." This interactive checklist will break down the setup process into simple actions with tooltips and short video snippets, guiding users to a successful first launch.</p>
+                    </div>
+                </div>
+                 <div id="solution-card-2" class="solution-card bg-white p-6 rounded-lg shadow-md cursor-pointer border-2 border-transparent transition-all">
+                    <div class="flex items-center mb-4">
+                         <div class="text-3xl mr-4">📈</div>
+                        <h3 class="text-xl font-bold">Proactive Engagement</h3>
+                    </div>
+                    <p>Close the value realization gap by confirming the product is working for the user.</p>
+                    <div class="solution-details hidden mt-4 pt-4 border-t">
+                         <p class="font-semibold">Initiative:</p>
+                         <p>Launch an automated "First 24-Hour Campaign Check-in." This email and in-app notification will confirm the campaign is live, show simple metrics, and provide a direct link to support, building immediate trust.</p>
+                    </div>
+                </div>
+                 <div id="solution-card-3" class="solution-card bg-white p-6 rounded-lg shadow-md cursor-pointer border-2 border-transparent transition-all">
+                    <div class="flex items-center mb-4">
+                        <div class="text-3xl mr-4">🧑‍🏫</div>
+                        <h3 class="text-xl font-bold">Education & Community</h3>
+                    </div>
+                    <p>Empower users with knowledge and build a supportive environment.</p>
+                    <div class="solution-details hidden mt-4 pt-4 border-t">
+                        <p class="font-semibold">Initiative:</p>
+                        <p>Host weekly live "Trial Accelerator" webinars. These 30-minute group sessions will offer live demos, Q&A with a specialist, and share best practices, addressing common roadblocks at scale.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="impact">
+            <h2 class="text-4xl font-bold text-center mb-2">Measuring Impact & Aligning the Team</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-10">To ensure our strategy is effective, we will track new KPIs focused on activation. This section outlines our success metrics and the communication plan to align all teams on these critical goals.</p>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <h3 class="text-xl font-bold">New KPI: Trial-to-Campaign Activation Rate</h3>
+                    <p class="text-sm text-gray-500 mb-4">Users who launch a campaign in their first 7 days.</p>
+                    <div class="chart-container mx-auto" style="height:200px; max-width: 400px;">
+                        <canvas id="kpiActivationChart"></canvas>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <h3 class="text-xl font-bold">New KPI: Time to Value (TTV)</h3>
+                    <p class="text-sm text-gray-500 mb-4">Average time for a user to launch their first campaign.</p>
+                    <div class="flex items-center justify-center space-x-8 mt-10">
+                        <div>
+                            <p class="text-gray-500">CURRENT</p>
+                            <p class="text-5xl font-bold">4+ Days</p>
+                        </div>
+                         <div class="text-5xl text-[#4A90E2] font-thin">→</div>
+                        <div>
+                            <p class="text-[#4A90E2]">GOAL</p>
+                            <p class="text-5xl font-bold text-[#4A90E2]">&lt;24 Hours</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold text-center mb-6">Strategic Communications</h3>
+                <div class="flex justify-center space-x-2 border-b mb-4">
+                    <button data-tab="ceo-email" class="tab-btn py-2 px-4 text-sm font-semibold rounded-t-lg transition-colors active">Email to CEO</button>
+                    <button data-tab="team-slack" class="tab-btn py-2 px-4 text-sm font-semibold rounded-t-lg transition-colors">Slack to Team</button>
+                    <button data-tab="scenario" class="tab-btn py-2 px-4 text-sm font-semibold rounded-t-lg transition-colors">Scenario Plan</button>
+                </div>
+                <div id="comm-content" class="text-sm text-gray-700 bg-gray-50 p-4 rounded-b-lg">
+                </div>
+            </div>
+        </section>
+    </main>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const appData = {
+        funnel: {
+            labels: ['Never connected Shopify store', 'Connected but never activated campaign', 'Activated 1 campaign but abandoned', 'Converted to paid'],
+            data: [40, 23, 17, 20],
+            colors: ['#E94E77', '#F3A261', '#4A90E2', '#50E3C2']
+        },
+        diagnosis: {
+            'Never connected Shopify store': {
+                title: 'Diagnosis: The Initial Activation Barrier',
+                challenge: "The largest drop-off (40%) occurs at the very first critical step. If a user fails here, they never get a chance to experience the product's core value, making abandonment almost certain. This is a failure to launch.",
+                userFeedback: "I couldn't figure out how to set up my first campaign.",
+                questions: [
+                    "What are the most common technical error codes when users attempt to connect their Shopify store?",
+                    "What is the engagement rate for our onboarding materials related to Shopify connection?",
+                    "What proactive outreach is performed for users with no action in the first 24 hours?"
+                ]
+            },
+            'Connected but never activated campaign': {
+                title: 'Diagnosis: First Value Realization Gap',
+                challenge: "This group has overcome the first hurdle but finds the campaign creation process too intimidating or confusing. They don't see an immediate path to value, leading to hesitation and churn.",
+                userFeedback: "I couldn't figure out how to set up my first campaign.",
+                 questions: [
+                    "Which specific step in campaign creation generates the most confusion?",
+                    "What one piece of information could we provide to give users more confidence to launch?",
+                    "What was the user's primary goal, and what prevented them from launching a campaign to meet it?"
+                ]
+            },
+            'Activated 1 campaign but abandoned': {
+                title: 'Diagnosis: Post-Activation Uncertainty',
+                challenge: "These users successfully launched a campaign but likely didn't understand the results or feel confident in the outcome. A lack of immediate, clear feedback on their action leads them to believe the platform isn't working for them.",
+                userFeedback: "I wasn't sure if it was working.",
+                questions: [
+                    "What specific feature or outcome makes successful users realize Markopolo's value?",
+                    "How can we guide more users to that 'Aha!' moment faster after their first campaign?",
+                    "What do users ask our support team most often after launching one campaign?"
+                ]
+            },
+            'Converted to paid': {
+                title: 'Analysis: The Success Path',
+                challenge: "These users successfully navigated the onboarding, launched a campaign, and understood the value it provided. Understanding their journey is key to replicating it for other users.",
+                userFeedback: "This is working!",
+                questions: [
+                    "What specific feature or outcome do converting users mention most frequently?",
+                    "What was the average 'Time to Value' for this cohort?",
+                    "Are there common characteristics or use cases among our converted users?"
+                ]
+            }
+        },
+        communications: {
+            'ceo-email': {
+                title: 'Email to CEO',
+                content: "<strong>Subject: Plan to Increase Trial Conversion by Improving User Onboarding</strong><br><br>Hi [CEO's Name],<br><br>I've analyzed our recent trial data and identified key reasons why 80% of users don't convert to paid customers. The primary issues are significant friction during the initial campaign setup and a lack of immediate, tangible feedback on their efforts.<br><br>To address this, I recommend three initiatives: an in-app interactive campaign setup guide, a proactive 24-hour campaign 'health check,' and weekly live onboarding webinars.<br><br>These improvements are designed to build user confidence, demonstrate value faster, and directly boost our campaign activation and trial-to-paid conversion rates. I am confident this focus on customer success will enhance retention and drive revenue growth.<br><br>Best regards,<br>[Your Name]"
+            },
+            'team-slack': {
+                title: 'Slack Message to Success Team',
+                content: "Hi @Success-Team!<br><br>I've just finished reviewing our trial funnel data and have some ideas on how we can tackle the high drop-off rates, especially for users who get stuck before launching their first campaign.<br><br>My proposals are:<br>1. <strong>In-App Guided Setup:</strong> A checklist-style wizard.<br>2. <strong>Proactive 24hr Check-in:</strong> An automated message to new campaigners.<br>3. <strong>Live Onboarding Webinars:</strong> Weekly group sessions for trial users.<br><br>I believe these initiatives will significantly improve user activation and require close coordination. I've scheduled a 30-minute meeting for tomorrow at 10 AM to walk through the details and brainstorm implementation. Please check your calendars. Let's do this!"
+            },
+            'scenario': {
+                title: 'Scenario Plan: Speed vs. Quality',
+                content: "<strong>The Situation:</strong> A competitor launched a smoother onboarding process. Leadership wants a fast release of our current version, but Support advises waiting for a more guided experience.<br><br><strong>The Recommendation: A Phased Beta Rollout.</strong><br><br>Instead of a full public launch, we immediately roll out the current version to a small, controlled segment of new sign-ups (e.g., 10%). This allows us to move fast and get into the market.<br><br>Simultaneously, we work closely with this beta group to gather direct feedback, which informs the development of the more polished, guided experience Support advocates for. In 2-3 weeks, we can roll out the improved, data-validated version to 100% of users.<br><br>This strategy balances speed with quality, minimizes risk, and ensures our final product is superior."
+            }
+        }
+    };
+
+    let funnelChartInstance = null;
+    
+    const wrapLabel = (label, maxLength = 16) => {
+        if (typeof label !== 'string' || label.length <= maxLength) return label;
+        const words = label.split(' ');
+        const lines = [];
+        let currentLine = '';
+        for (const word of words) {
+            if ((currentLine + ' ' + word).trim().length > maxLength && currentLine.length > 0) {
+                lines.push(currentLine);
+                currentLine = '';
+            }
+            currentLine = (currentLine + ' ' + word).trim();
+        }
+        if (currentLine) lines.push(currentLine);
+        return lines;
+    };
+
+    const tooltipTitleCallback = (tooltipItems) => {
+        const item = tooltipItems[0];
+        let label = item.chart.data.labels[item.dataIndex];
+        return Array.isArray(label) ? label.join(' ') : label;
+    };
+
+    const defaultChartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                labels: { color: '#333' }
+            },
+            tooltip: {
+                callbacks: {
+                    title: tooltipTitleCallback
+                }
+            }
+        }
+    };
+    
+    function renderOutcomesChart() {
+        const ctx = document.getElementById('outcomesChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Converted to Paid', 'Dropped Off'],
+                datasets: [{
+                    data: [20, 80],
+                    backgroundColor: ['#50E3C2', '#E94E77'],
+                    borderColor: '#F8F9FA',
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                cutout: '70%'
+            }
+        });
+    }
+
+    function renderFunnelChart() {
+        const ctx = document.getElementById('funnelChart').getContext('2d');
+        funnelChartInstance = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: appData.funnel.labels.map(l => wrapLabel(l)),
+                datasets: [{
+                    label: '% of Total Users',
+                    data: appData.funnel.data,
+                    backgroundColor: appData.funnel.colors,
+                    borderColor: '#333',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                indexAxis: 'y',
+                onClick: (event, elements) => {
+                    if (elements.length > 0) {
+                        const chartElement = elements[0];
+                        const index = chartElement.index;
+                        const label = appData.funnel.labels[index];
+                        updateDiagnosisPanel(label);
+
+                        funnelChartInstance.data.datasets[0].backgroundColor = appData.funnel.colors.map((color, i) => i === index ? color : color + '60');
+                        funnelChartInstance.update();
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: value => value + '%'
+                        }
+                    }
+                },
+                plugins: {
+                    ...defaultChartOptions.plugins,
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
+
+    function updateDiagnosisPanel(label) {
+        const panel = document.getElementById('diagnosis-panel');
+        const data = appData.diagnosis[label];
+        if (!data) return;
+
+        const questionsHtml = data.questions.map(q => `<li class="mb-2">${q}</li>`).join('');
+        
+        panel.innerHTML = `
+            <h3 class="text-xl font-bold mb-2">${data.title}</h3>
+            <p class="text-sm font-semibold text-gray-500 mb-4">User Feedback: <span class="italic text-gray-700">"${data.userFeedback}"</span></p>
+            <div class="bg-gray-50 p-4 rounded-md">
+                <p class="font-semibold mb-2">Challenge:</p>
+                <p class="text-gray-700 mb-4">${data.challenge}</p>
+                <p class="font-semibold mb-2">Key Questions for Investigation:</p>
+                <ul class="list-disc list-inside text-gray-700 text-sm">
+                    ${questionsHtml}
+                </ul>
+            </div>
+        `;
+    }
+
+    function renderKPIChart() {
+        const ctx = document.getElementById('kpiActivationChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Current Rate', 'Gap to Goal'],
+                datasets: [{
+                    data: [37, 18], // 55% goal - 37% current = 18% gap
+                    backgroundColor: ['#50E3C2', '#E0E0E0'],
+                    circumference: 180,
+                    rotation: -90,
+                    borderWidth: 0,
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                cutout: '60%',
+                plugins: {
+                    ...defaultChartOptions.plugins,
+                    tooltip: { enabled: false },
+                    legend: { display: false }
+                },
+                elements: {
+                    arc: {
+                        borderWidth: 0
+                    }
+                }
+            },
+            plugins: [{
+                id: 'gaugeText',
+                beforeDraw(chart) {
+                    const { width, height, ctx } = chart;
+                    ctx.restore();
+                    const fontSize = (height / 114).toFixed(2);
+                    ctx.font = `bold ${fontSize}em Inter, sans-serif`;
+                    ctx.textBaseline = 'middle';
+
+                    const currentText = '37%';
+                    const currentX = Math.round((width - ctx.measureText(currentText).width) / 2);
+                    const currentY = height / 1.5;
+                    ctx.fillStyle = '#333';
+                    ctx.fillText(currentText, currentX, currentY);
+
+                    const goalText = 'Goal: 55%';
+                    const goalFontSize = (height / 200).toFixed(2);
+                    ctx.font = `500 ${goalFontSize}em Inter, sans-serif`;
+                    const goalX = Math.round((width - ctx.measureText(goalText).width) / 2);
+                    const goalY = currentY + 30;
+                     ctx.fillStyle = '#4A90E2';
+                    ctx.fillText(goalText, goalX, goalY);
+
+                    ctx.save();
+                }
+            }]
+        });
+    }
+
+    function handleSolutionCards() {
+        const cards = document.querySelectorAll('.solution-card');
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                const isActive = card.classList.contains('active');
+                
+                cards.forEach(c => {
+                    c.classList.remove('active');
+                    c.querySelector('.solution-details').classList.add('hidden');
+                });
+
+                if (!isActive) {
+                    card.classList.add('active');
+                    card.querySelector('.solution-details').classList.remove('hidden');
+                }
+            });
+        });
+    }
+
+    function handleCommTabs() {
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const contentContainer = document.getElementById('comm-content');
+        
+        function updateContent(tabId) {
+             const data = appData.communications[tabId];
+             if(data) {
+                contentContainer.innerHTML = `<p>${data.content}</p>`;
+             }
+        }
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.dataset.tab;
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                updateContent(tabId);
+            });
+        });
+        
+        updateContent('ceo-email');
+    }
+
+    function handleScrollSpy() {
+        const sections = document.querySelectorAll('main section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('nav-link-active');
+                        if (link.getAttribute('href').substring(1) === entry.target.id) {
+                            link.classList.add('nav-link-active');
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: "-50% 0px -50% 0px" });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    }
+
+    renderOutcomesChart();
+    renderFunnelChart();
+    updateDiagnosisPanel(appData.funnel.labels[0]);
+    renderKPIChart();
+    handleSolutionCards();
+    handleCommTabs();
+    handleScrollSpy();
+});
+</script>
+</body>
+</html>
