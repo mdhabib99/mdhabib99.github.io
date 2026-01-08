@@ -1,771 +1,523 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MD. HABIBUR RAHMAN - Full Stack Developer</title>
+    <title>Md. Habibur Rahman | SaaS Product Manager Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6', // Blue
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        },
+                        dark: {
+                            900: '#0f172a', // Slate 900
+                            800: '#1e293b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(229, 231, 235, 0.5);
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+        .hero-pattern {
+            background-color: #f8fafc;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 30px 30px;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        /* Navigation */
-        nav {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #667eea;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        nav a:hover {
-            color: #764ba2;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: white;
-            border-radius: 15px;
-            padding: 3rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .hero-content h1 {
-            font-size: 2.5rem;
-            color: #667eea;
-            margin-bottom: 1rem;
-        }
-
-        .hero-content h2 {
-            font-size: 1.3rem;
-            color: #764ba2;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-        }
-
-        .hero-summary {
-            color: #555;
-            margin-bottom: 2rem;
-            line-height: 1.8;
-        }
-
-        .hero-image {
-            text-align: center;
-        }
-
-        .hero-image img {
-            width: 100%;
-            max-width: 300px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .hero-image img:hover {
-            transform: scale(1.05);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .social-links a {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 40px;
-            text-decoration: none;
-            transition: transform 0.3s ease;
-        }
-
-        .social-links a:hover {
-            transform: translateY(-3px);
-        }
-
-        /* Section Styles */
-        section {
-            background: white;
-            border-radius: 15px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            color: #667eea;
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 3px solid #764ba2;
-        }
-
-        /* Education Section */
-        .education-item {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid #eee;
-        }
-
-        .education-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .education-content h3 {
-            color: #764ba2;
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .education-meta {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .education-details {
-            color: #555;
-            line-height: 1.8;
-        }
-
-        .education-image {
-            text-align: center;
-        }
-
-        .education-image img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Experience Section */
-        .experience-item {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            align-items: center;
-            margin-bottom: 2.5rem;
-            padding-bottom: 2.5rem;
-            border-bottom: 1px solid #eee;
-        }
-
-        .experience-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .experience-content h3 {
-            color: #764ba2;
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .job-title {
-            color: #667eea;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .job-duration {
-            color: #999;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .job-description {
-            color: #555;
-            line-height: 1.8;
-        }
-
-        .job-description ul {
-            margin-left: 1.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .job-description li {
-            margin-bottom: 0.5rem;
-        }
-
-        .experience-image {
-            text-align: center;
-        }
-
-        .experience-image img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-        }
-
-        .skill-category h3 {
-            color: #764ba2;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-        }
-
-        .skill-tag {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            transition: transform 0.3s ease;
-        }
-
-        .skill-tag:hover {
-            transform: translateY(-2px);
-        }
-
-        /* Projects Section */
-        .project-item {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            align-items: center;
-            margin-bottom: 2.5rem;
-            padding: 1.5rem;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-        }
-
-        .project-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .project-content h3 {
-            color: #764ba2;
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .project-tech {
-            color: #667eea;
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .project-description {
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        .project-link {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: transform 0.3s ease;
-        }
-
-        .project-link:hover {
-            transform: translateY(-2px);
-        }
-
-        .project-image {
-            text-align: center;
-        }
-
-        .project-image img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Achievements Section */
-        .achievements-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        .achievement-card {
-            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
-            padding: 1.5rem;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-            transition: transform 0.3s ease;
-        }
-
-        .achievement-card:hover {
+        .card-hover:hover {
             transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-
-        .achievement-card h3 {
-            color: #764ba2;
-            margin-bottom: 0.5rem;
-        }
-
-        .achievement-card p {
-            color: #555;
-            line-height: 1.6;
-        }
-
-        /* Footer */
-        footer {
-            background: rgba(255, 255, 255, 0.95);
-            text-align: center;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        footer p {
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero,
-            .education-item,
-            .experience-item,
-            .project-item {
-                grid-template-columns: 1fr;
-            }
-
-            .skills-grid,
-            .achievements-grid {
-                grid-template-columns: 1fr;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-            }
-
-            .hero-content h1 {
-                font-size: 1.8rem;
-            }
-
-            .container {
-                padding: 10px;
-            }
-
-            section,
-            .hero {
-                padding: 1.5rem;
-            }
+        .skill-bar {
+            transition: width 1.5s ease-in-out;
         }
     </style>
 </head>
-<body>
-    <nav>
-        <ul>
-            <li><a href="#hero">Home</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#achievements">Achievements</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-primary-600 selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-indigo-700 flex items-center justify-center text-white font-bold text-xl shadow-lg">H</div>
+                    <div>
+                        <span class="block font-bold text-lg tracking-tight text-slate-900 leading-none">Habibur Rahman</span>
+                        <span class="text-xs text-primary-600 font-medium tracking-wide">PRODUCT MANAGER</span>
+                    </div>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors">About</a>
+                    <a href="#experience" class="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors">Experience</a>
+                    <a href="#projects" class="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors">Projects</a>
+                    <a href="#skills" class="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors">Skills</a>
+                    <a href="mailto:Salmanhabib11186@gmail.com" class="px-6 py-2.5 rounded-full bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">Let's Talk</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-600 hover:text-slate-900 focus:outline-none p-2 rounded-md hover:bg-slate-100">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full shadow-xl">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="#about" class="block px-3 py-3 rounded-lg text-base font-medium text-slate-600 hover:text-primary-600 hover:bg-slate-50">About</a>
+                <a href="#experience" class="block px-3 py-3 rounded-lg text-base font-medium text-slate-600 hover:text-primary-600 hover:bg-slate-50">Experience</a>
+                <a href="#projects" class="block px-3 py-3 rounded-lg text-base font-medium text-slate-600 hover:text-primary-600 hover:bg-slate-50">Projects</a>
+                <a href="#skills" class="block px-3 py-3 rounded-lg text-base font-medium text-slate-600 hover:text-primary-600 hover:bg-slate-50">Skills</a>
+                <div class="pt-4 mt-2 border-t border-slate-100">
+                    <a href="mailto:Salmanhabib11186@gmail.com" class="block w-full text-center px-4 py-3 rounded-lg bg-primary-600 text-white font-bold hover:bg-primary-700">Contact Me</a>
+                </div>
+            </div>
+        </div>
     </nav>
 
-    <div class="container">
-        <!-- Hero Section -->
-        <section class="hero" id="hero">
-            <div class="hero-content">
-                <h1>MD. HABIBUR RAHMAN</h1>
-                <h2>Full Stack Web Developer</h2>
-                <p class="hero-summary">
-                    Passionate and dedicated Full Stack Developer with expertise in building scalable, responsive web applications. 
-                    Proficient in modern JavaScript frameworks, backend technologies, and database management. 
-                    Committed to writing clean, maintainable code and delivering high-quality solutions that exceed expectations. 
-                    Constantly learning and staying updated with the latest industry trends and technologies.
+    <!-- Hero Section -->
+    <section id="about" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden hero-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-24">
+                
+                <!-- Text Content -->
+                <div class="flex-1 text-center lg:text-left space-y-8 z-10">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-700 text-sm font-semibold shadow-sm">
+                        <span class="relative flex h-3 w-3">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                        </span>
+                        Scrum Certified SaaS Product Manager
+                    </div>
+                    
+                    <h1 class="text-4xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                        Transforming Complexity into <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-indigo-600">Scalable Products</span>
+                    </h1>
+                    
+                    <p class="text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        Hi, I'm <span class="font-bold text-slate-900">Md. Habibur Rahman</span>. I have 5+ years of experience delivering B2B SaaS Platforms, ERP Systems, and digital solutions. I specialize in problem discovery, workflow optimization, and data-driven product development.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                        <a href="#projects" class="inline-flex justify-center items-center px-8 py-4 rounded-xl bg-primary-600 text-white font-semibold hover:bg-primary-700 transition-all shadow-lg hover:shadow-primary-500/30 transform hover:-translate-y-1">
+                            View My Work
+                        </a>
+                        <a href="mailto:Salmanhabib11186@gmail.com" class="inline-flex justify-center items-center px-8 py-4 rounded-xl bg-white text-slate-700 border border-slate-200 font-semibold hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm hover:shadow-md">
+                            Download Resume
+                            <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        </a>
+                    </div>
+                    
+                    <div class="pt-8 border-t border-slate-200/60 flex items-center justify-center lg:justify-start gap-8 text-slate-500">
+                        <a href="https://www.linkedin.com/in/habibrahman99/" target="_blank" class="hover:text-primary-600 transition-colors flex items-center gap-2 font-medium">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                            LinkedIn
+                        </a>
+                        <span class="h-1 w-1 rounded-full bg-slate-300"></span>
+                        <a href="mailto:Salmanhabib11186@gmail.com" class="hover:text-primary-600 transition-colors flex items-center gap-2 font-medium">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            Email
+                        </a>
+                        <span class="h-1 w-1 rounded-full bg-slate-300"></span>
+                        <span class="flex items-center gap-2 font-medium">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            Dhaka, BD
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Profile Image -->
+                <div class="flex-1 relative group flex justify-center lg:justify-end">
+                    <div class="relative w-80 h-80 sm:w-96 sm:h-96">
+                        <!-- Decorative Elements -->
+                        <div class="absolute -top-4 -right-4 w-full h-full border-2 border-primary-200 rounded-[2rem] z-0"></div>
+                        <div class="absolute top-4 left-4 w-full h-full bg-primary-100 rounded-[2rem] z-0"></div>
+                        
+                        <!-- Main Image Container -->
+                        <div class="absolute inset-0 bg-white rounded-[2rem] shadow-2xl overflow-hidden border-4 border-white z-10 transform transition-transform duration-300 group-hover:-translate-y-2">
+                            <img src="https://mdhabib99.github.io/resized.jpg" alt="Md. Habibur Rahman" class="w-full h-full object-cover">
+                        </div>
+                        
+                        <!-- Floating Badge -->
+                        <div class="absolute -bottom-8 -left-8 bg-white p-4 rounded-xl shadow-xl border border-slate-100 z-20 flex items-center gap-4 animate-bounce" style="animation-duration: 4s;">
+                            <div class="bg-primary-600 text-white p-3 rounded-lg">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500 font-bold uppercase tracking-wide">Experience</p>
+                                <p class="text-xl font-bold text-slate-900">5+ Years</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <h2 class="text-sm font-bold text-primary-600 tracking-widest uppercase mb-3">Career Journey</h2>
+                <h3 class="text-3xl md:text-4xl font-extrabold text-slate-900">Professional Experience</h3>
+            </div>
+
+            <div class="relative">
+                <!-- Timeline Line -->
+                <div class="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5 bg-slate-200"></div>
+
+                <div class="space-y-16">
+                    
+                    <!-- Role 1 -->
+                    <div class="relative flex flex-col md:flex-row gap-8 items-start md:items-center">
+                        <div class="md:w-1/2 md:text-right md:pr-12 order-2 md:order-1 pl-12 md:pl-0">
+                            <h4 class="text-xl font-bold text-slate-900">Sr. Deputy Assistant Director (ICT)</h4>
+                            <div class="text-primary-600 font-semibold mb-2">Walton Hi-Tech Industries PLC</div>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                                Acting as the Product Owner for Enterprise Software Products (ERP, POS). Defining problem statements, user stories, and success metrics. Leading end-to-end feature delivery by collaborating with Engineering, UI/UX, and QA teams.
+                            </p>
+                            <div class="flex flex-wrap gap-2 justify-start md:justify-end">
+                                <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-semibold">Odoo ERP</span>
+                                <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-semibold">Product Strategy</span>
+                                <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-semibold">SaaS</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Icon -->
+                        <div class="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 -translate-y-0 w-8 h-8 rounded-full border-4 border-white bg-primary-600 shadow-md z-10"></div>
+
+                        <div class="md:w-1/2 md:pl-12 order-1 md:order-2 pl-12">
+                            <span class="inline-block px-4 py-1.5 bg-primary-50 text-primary-700 text-sm font-bold rounded-full border border-primary-100">Aug 2021 - Present</span>
+                        </div>
+                    </div>
+
+                    <!-- Role 2 -->
+                    <div class="relative flex flex-col md:flex-row gap-8 items-start md:items-center">
+                        <div class="md:w-1/2 md:text-right md:pr-12 order-2 md:order-1 pl-12 md:pl-0 md:hidden block">
+                             <!-- Mobile Date -->
+                             <span class="inline-block px-4 py-1.5 bg-slate-100 text-slate-600 text-sm font-bold rounded-full border border-slate-200">Oct 2020 - Mar 2021</span>
+                        </div>
+                        <div class="md:w-1/2 md:pr-12 order-1 md:order-1 text-right hidden md:block">
+                            <span class="inline-block px-4 py-1.5 bg-slate-100 text-slate-600 text-sm font-bold rounded-full border border-slate-200">Oct 2020 - Mar 2021</span>
+                        </div>
+
+                        <!-- Icon -->
+                        <div class="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 -translate-y-0 w-8 h-8 rounded-full border-4 border-white bg-slate-400 shadow-md z-10"></div>
+
+                        <div class="md:w-1/2 md:pl-12 order-3 md:order-2 pl-12 md:pl-0 text-left md:pl-12">
+                            <h4 class="text-xl font-bold text-slate-900">Trainer - Web & Business Applications</h4>
+                            <div class="text-slate-500 font-semibold mb-2">LEDP, ICT Division</div>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                                Developed and led courses on web development (Python, Django, PostgreSQL). Provided comprehensive support for students' technical growth and led E-Commerce project developments.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-semibold">Python</span>
+                                <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-semibold">Django</span>
+                                <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-semibold">Training</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 bg-slate-50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-sm font-bold text-primary-600 tracking-widest uppercase mb-3">My Portfolio</h2>
+                <h3 class="text-3xl md:text-4xl font-extrabold text-slate-900">Featured Projects</h3>
+                <p class="mt-4 text-slate-500 text-lg">Delivering end-to-end solutions from requirements to launch.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                
+                <!-- Project 1 -->
+                <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl card-hover border border-slate-200/60 overflow-hidden flex flex-col h-full">
+                    <div class="h-2 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
+                    <div class="p-8 flex-1 flex flex-col">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-3 bg-blue-50 rounded-xl text-blue-600">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                            </div>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-900 mb-2">PAI PAI POS & ERP System</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-1">
+                            Implemented a comprehensive Point of Sales system with automated VAT/TAX calculation. Led workflow optimization, reporting features, and payment gateway integration.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto pt-4 border-t border-slate-100">
+                            <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">Odoo 16</span>
+                            <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">Python</span>
+                            <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">PostgreSQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl card-hover border border-slate-200/60 overflow-hidden flex flex-col h-full">
+                    <div class="h-2 bg-gradient-to-r from-purple-500 to-pink-600"></div>
+                    <div class="p-8 flex-1 flex flex-col">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-3 bg-purple-50 rounded-xl text-purple-600">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                            </div>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-900 mb-2">E-Commerce Website</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-1">
+                            Designed user-friendly Product Pages and checkout flows. Features include product filtering, SSL Commerz integration, and review systems.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto pt-4 border-t border-slate-100">
+                            <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">ReactJs</span>
+                            <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">NextJs</span>
+                            <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">Django</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl card-hover border border-slate-200/60 overflow-hidden flex flex-col h-full">
+                    <div class="h-2 bg-gradient-to-r from-indigo-500 to-blue-600"></div>
+                    <div class="p-8 flex-1 flex flex-col">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-3 bg-indigo-50 rounded-xl text-indigo-600">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                            </div>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-900 mb-2">Mobile Device Management (MDM)</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-1">
+                            Gathered requirements and analyzed competitors to create PRD. Collaborated with UX/UI to design compliance, policy enforcement, and admin workflows.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto pt-4 border-t border-slate-100">
+                            <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">PRD</span>
+                            <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">VMware</span>
+                            <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">Security</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl card-hover border border-slate-200/60 overflow-hidden flex flex-col h-full">
+                    <div class="h-2 bg-gradient-to-r from-yellow-500 to-orange-600"></div>
+                    <div class="p-8 flex-1 flex flex-col">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-3 bg-yellow-50 rounded-xl text-yellow-600">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                            </div>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-900 mb-2">Analytics & Dashboards</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-1">
+                            Created BI dashboards for operational KPIs. Spearheaded knowledge automation integrating Odoo ERP and BI, reducing manual reporting time by 60%.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto pt-4 border-t border-slate-100">
+                            <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">Power BI</span>
+                            <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">Tableau</span>
+                            <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">Data Viz</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills & Certifications -->
+    <section id="skills" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                
+                <!-- Skills -->
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
+                        <span class="p-2 bg-primary-100 rounded-lg text-primary-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg></span>
+                        Technical & Product Skills
+                    </h3>
+                    
+                    <div class="space-y-8">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-slate-700 font-semibold text-sm">Product Management & Scrum</span>
+                                <span class="text-primary-600 font-bold text-sm">Expert</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2">
+                                <div class="bg-primary-600 h-2 rounded-full skill-bar" style="width: 95%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-slate-700 font-semibold text-sm">ERP & SaaS Solutions</span>
+                                <span class="text-primary-600 font-bold text-sm">Advanced</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2">
+                                <div class="bg-primary-600 h-2 rounded-full skill-bar" style="width: 90%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-slate-700 font-semibold text-sm">Programming (Python, SQL, React)</span>
+                                <span class="text-primary-600 font-bold text-sm">Proficient</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2">
+                                <div class="bg-primary-600 h-2 rounded-full skill-bar" style="width: 80%"></div>
+                            </div>
+                        </div>
+
+                         <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-slate-700 font-semibold text-sm">Tools (Power BI, Jira, Git)</span>
+                                <span class="text-primary-600 font-bold text-sm">Advanced</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2">
+                                <div class="bg-primary-600 h-2 rounded-full skill-bar" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certifications -->
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
+                        <span class="p-2 bg-green-100 rounded-lg text-green-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></span>
+                        Certifications
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        
+                        <div class="p-5 border border-slate-200 rounded-xl hover:border-primary-500 hover:shadow-md transition-all bg-slate-50/50">
+                            <h4 class="font-bold text-slate-900">Scrum Certified Product Manager</h4>
+                            <p class="text-xs text-slate-500 font-semibold mt-1">SFC™</p>
+                        </div>
+
+                        <div class="p-5 border border-slate-200 rounded-xl hover:border-primary-500 hover:shadow-md transition-all bg-slate-50/50">
+                            <h4 class="font-bold text-slate-900">VMware Certified IT Professional</h4>
+                            <p class="text-xs text-slate-500 font-semibold mt-1">VCP - Digital Workspace</p>
+                        </div>
+
+                        <div class="p-5 border border-slate-200 rounded-xl hover:border-primary-500 hover:shadow-md transition-all bg-slate-50/50">
+                            <h4 class="font-bold text-slate-900">Android Enterprise Certified</h4>
+                            <p class="text-xs text-slate-500 font-semibold mt-1">Professional</p>
+                        </div>
+
+                         <div class="p-5 border border-slate-200 rounded-xl hover:border-primary-500 hover:shadow-md transition-all bg-slate-50/50">
+                            <h4 class="font-bold text-slate-900">Six Sigma Yellow Belt</h4>
+                            <p class="text-xs text-slate-500 font-semibold mt-1">SSYB™</p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section class="py-20 bg-slate-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+             <div class="bg-white p-8 md:p-12 rounded-2xl shadow-lg border border-slate-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-primary-600"></div>
+                <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                    <div class="text-left">
+                        <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-1">Education</h2>
+                        <h3 class="text-xl md:text-2xl font-bold text-slate-900">B.Sc. (Engineering) in Electrical & Electronic Engineering</h3>
+                        <p class="text-slate-600 mt-2 font-medium">Hajee Mohammad Danesh Science & Technology University, Dinajpur</p>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <span class="inline-block px-5 py-2 bg-slate-100 text-slate-700 font-bold rounded-lg border border-slate-200">2016 - 2019</span>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <footer id="contact" class="bg-dark-900 text-white pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 items-center">
+                <div class="text-center md:text-left">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Let's build something scalable.</h2>
+                    <p class="text-slate-400 text-lg">Open for Product Management opportunities.</p>
+                </div>
+                <div class="flex justify-center md:justify-end">
+                    <a href="mailto:Salmanhabib11186@gmail.com" class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-primary-600 rounded-xl hover:bg-primary-500 shadow-lg hover:shadow-primary-600/50">
+                        Get In Touch
+                        <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-slate-500 text-sm">
+                    &copy; 2026 Md. Habibur Rahman. All rights reserved.
                 </p>
-                <div class="social-links">
-                    <a href="https://github.com/mdhabib99" title="GitHub">🔗</a>
-                    <a href="https://linkedin.com/in/mdhabibur-rahman" title="LinkedIn">💼</a>
-                    <a href="mailto:habibur@example.com" title="Email">📧</a>
-                    <a href="https://twitter.com/mdhabib99" title="Twitter">🐦</a>
+                <div class="flex space-x-6">
+                    <a href="https://www.linkedin.com/in/habibrahman99/" class="text-slate-400 hover:text-white transition-colors">
+                        LinkedIn
+                    </a>
+                    <a href="mailto:Salmanhabib11186@gmail.com" class="text-slate-400 hover:text-white transition-colors">
+                        Email
+                    </a>
                 </div>
             </div>
-            <div class="hero-image">
-                <img src="https://via.placeholder.com/300x300?text=MD.+HABIBUR+RAHMAN" alt="MD. Habibur Rahman">
-            </div>
-        </section>
+        </div>
+    </footer>
 
-        <!-- Education Section -->
-        <section id="education">
-            <h2>Education</h2>
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId !== '#') {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
 
-            <div class="education-item">
-                <div class="education-content">
-                    <h3>Bachelor of Science in Computer Science</h3>
-                    <p class="education-meta">University Name | Graduation: 2023</p>
-                    <p class="education-details">
-                        <strong>GPA:</strong> 3.8/4.0<br>
-                        <strong>Relevant Coursework:</strong> Data Structures, Algorithms, Web Development, 
-                        Database Management Systems, Software Engineering, Operating Systems<br>
-                        <strong>Honors:</strong> Dean's List (All Semesters), Academic Excellence Award
-                    </p>
-                </div>
-                <div class="education-image">
-                    <img src="https://via.placeholder.com/300x200?text=Education" alt="Education">
-                </div>
-            </div>
+        // Mobile menu toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
 
-            <div class="education-item">
-                <div class="education-content">
-                    <h3>Advanced Web Development Bootcamp</h3>
-                    <p class="education-meta">Online Learning Platform | Completed: 2024</p>
-                    <p class="education-details">
-                        <strong>Focus Areas:</strong> React.js, Node.js, MongoDB, RESTful APIs<br>
-                        <strong>Capstone Project:</strong> Full-stack e-commerce platform with payment integration<br>
-                        <strong>Certificate:</strong> Full Stack JavaScript Developer
-                    </p>
-                </div>
-                <div class="education-image">
-                    <img src="https://via.placeholder.com/300x200?text=Bootcamp" alt="Bootcamp">
-                </div>
-            </div>
-        </section>
-
-        <!-- Experience Section -->
-        <section id="experience">
-            <h2>Professional Experience</h2>
-
-            <div class="experience-item">
-                <div class="experience-content">
-                    <h3>Senior Full Stack Developer</h3>
-                    <p class="job-title">Tech Solutions Inc.</p>
-                    <p class="job-duration">January 2024 - Present</p>
-                    <div class="job-description">
-                        <p>Leading development of enterprise-scale web applications serving 100K+ users</p>
-                        <ul>
-                            <li>Architected and implemented microservices using Node.js and Express</li>
-                            <li>Optimized database queries reducing load time by 45%</li>
-                            <li>Mentored junior developers and conducted code reviews</li>
-                            <li>Led migration from monolithic to microservices architecture</li>
-                            <li>Technologies: React, Node.js, MongoDB, PostgreSQL, Docker, AWS</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="experience-image">
-                    <img src="https://via.placeholder.com/300x200?text=Senior+Developer" alt="Senior Role">
-                </div>
-            </div>
-
-            <div class="experience-item">
-                <div class="experience-content">
-                    <h3>Full Stack Developer</h3>
-                    <p class="job-title">Digital Innovation Lab</p>
-                    <p class="job-duration">June 2023 - December 2023</p>
-                    <div class="job-description">
-                        <p>Developed and maintained multiple client-facing web applications</p>
-                        <ul>
-                            <li>Built responsive UI components using React and Redux</li>
-                            <li>Designed and implemented RESTful APIs with Express.js</li>
-                            <li>Increased application performance by 60% through optimization</li>
-                            <li>Collaborated with UI/UX designers to implement pixel-perfect designs</li>
-                            <li>Technologies: React, JavaScript, Node.js, MySQL, CSS3, HTML5</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="experience-image">
-                    <img src="https://via.placeholder.com/300x200?text=Full+Stack" alt="Developer Role">
-                </div>
-            </div>
-
-            <div class="experience-item">
-                <div class="experience-content">
-                    <h3>Junior Web Developer</h3>
-                    <p class="job-title">StartUp Ventures</p>
-                    <p class="job-duration">January 2023 - May 2023</p>
-                    <div class="job-description">
-                        <p>Contributed to development of web applications in an agile environment</p>
-                        <ul>
-                            <li>Created responsive web pages using HTML, CSS, and JavaScript</li>
-                            <li>Fixed bugs and implemented new features based on requirements</li>
-                            <li>Participated in sprint planning and daily standup meetings</li>
-                            <li>Learned and applied modern development best practices</li>
-                            <li>Technologies: HTML5, CSS3, JavaScript, jQuery, Bootstrap</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="experience-image">
-                    <img src="https://via.placeholder.com/300x200?text=Junior+Developer" alt="Junior Role">
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section id="skills">
-            <h2>Technical Skills</h2>
-
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Frontend Technologies</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">React.js</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">HTML5</span>
-                        <span class="skill-tag">CSS3</span>
-                        <span class="skill-tag">Redux</span>
-                        <span class="skill-tag">TypeScript</span>
-                        <span class="skill-tag">Bootstrap</span>
-                        <span class="skill-tag">Tailwind CSS</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3>Backend Technologies</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Node.js</span>
-                        <span class="skill-tag">Express.js</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">Django</span>
-                        <span class="skill-tag">RESTful APIs</span>
-                        <span class="skill-tag">GraphQL</span>
-                        <span class="skill-tag">JWT Auth</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3>Databases</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">MongoDB</span>
-                        <span class="skill-tag">PostgreSQL</span>
-                        <span class="skill-tag">MySQL</span>
-                        <span class="skill-tag">Firebase</span>
-                        <span class="skill-tag">Redis</span>
-                        <span class="skill-tag">SQL</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3>Tools & Platforms</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Git/GitHub</span>
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">AWS</span>
-                        <span class="skill-tag">Heroku</span>
-                        <span class="skill-tag">Webpack</span>
-                        <span class="skill-tag">Postman</span>
-                        <span class="skill-tag">VS Code</span>
-                        <span class="skill-tag">Linux</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects">
-            <h2>Featured Projects</h2>
-
-            <div class="project-item">
-                <div class="project-content">
-                    <h3>E-Commerce Platform</h3>
-                    <p class="project-tech">React • Node.js • MongoDB • Stripe</p>
-                    <p class="project-description">
-                        A full-featured e-commerce platform with product catalog, shopping cart, secure payment integration, 
-                        and admin dashboard for managing inventory and orders. Supports multiple payment methods and real-time order tracking.
-                    </p>
-                    <a href="https://github.com/mdhabib99/ecommerce-platform" class="project-link">View on GitHub</a>
-                </div>
-                <div class="project-image">
-                    <img src="https://via.placeholder.com/300x200?text=E-Commerce" alt="E-Commerce Platform">
-                </div>
-            </div>
-
-            <div class="project-item">
-                <div class="project-content">
-                    <h3>Task Management Application</h3>
-                    <p class="project-tech">React • Firebase • Material-UI</p>
-                    <p class="project-description">
-                        A collaborative task management application allowing users to create projects, assign tasks, set deadlines, 
-                        and track progress. Features real-time updates, user authentication, and role-based access control.
-                    </p>
-                    <a href="https://github.com/mdhabib99/task-manager" class="project-link">View on GitHub</a>
-                </div>
-                <div class="project-image">
-                    <img src="https://via.placeholder.com/300x200?text=Task+Manager" alt="Task Manager">
-                </div>
-            </div>
-
-            <div class="project-item">
-                <div class="project-content">
-                    <h3>Weather Forecast App</h3>
-                    <p class="project-tech">React • OpenWeather API • Geolocation</p>
-                    <p class="project-description">
-                        A weather application providing real-time weather data, 7-day forecasts, and weather alerts. 
-                        Uses geolocation API for automatic location detection and includes beautiful UI with weather-responsive backgrounds.
-                    </p>
-                    <a href="https://github.com/mdhabib99/weather-app" class="project-link">View on GitHub</a>
-                </div>
-                <div class="project-image">
-                    <img src="https://via.placeholder.com/300x200?text=Weather+App" alt="Weather App">
-                </div>
-            </div>
-
-            <div class="project-item">
-                <div class="project-content">
-                    <h3>Blog Platform with CMS</h3>
-                    <p class="project-tech">Node.js • Express • MongoDB • EJS</p>
-                    <p class="project-description">
-                        A content management system for creating, editing, and publishing blog posts. Features user authentication, 
-                        comment system, search functionality, and responsive design for mobile and desktop viewing.
-                    </p>
-                    <a href="https://github.com/mdhabib99/blog-cms" class="project-link">View on GitHub</a>
-                </div>
-                <div class="project-image">
-                    <img src="https://via.placeholder.com/300x200?text=Blog+CMS" alt="Blog Platform">
-                </div>
-            </div>
-        </section>
-
-        <!-- Achievements Section -->
-        <section id="achievements">
-            <h2>Achievements & Recognitions</h2>
-
-            <div class="achievements-grid">
-                <div class="achievement-card">
-                    <h3>⭐ Employee of the Month</h3>
-                    <p>Recognized for exceptional performance and outstanding contributions to team projects at Tech Solutions Inc. (Multiple times: 2024)</p>
-                </div>
-
-                <div class="achievement-card">
-                    <h3>🏆 Code Excellence Award</h3>
-                    <p>Awarded for writing clean, efficient, and well-documented code that served as a model for the development team.</p>
-                </div>
-
-                <div class="achievement-card">
-                    <h3>📈 Performance Optimization Champion</h3>
-                    <p>Led initiative to reduce application load time by 45%, significantly improving user experience and reducing server costs.</p>
-                </div>
-
-                <div class="achievement-card">
-                    <h3>👨‍🏫 Mentorship Excellence</h3>
-                    <p>Successfully mentored 5+ junior developers, helping them advance their careers and improve their technical skills.</p>
-                </div>
-
-                <div class="achievement-card">
-                    <h3>🔐 Security Certification</h3>
-                    <p>Completed comprehensive web security certification and implemented best practices across all company projects.</p>
-                </div>
-
-                <div class="achievement-card">
-                    <h3>🎓 Continuous Learning</h3>
-                    <p>Completed multiple advanced certifications in React, Node.js, and AWS, staying ahead of industry trends.</p>
-                </div>
-
-                <div class="achievement-card">
-                    <h3>📊 GitHub Contributor</h3>
-                    <p>Active open-source contributor with 500+ GitHub contributions and 2000+ followers in the developer community.</p>
-                </div>
-
-                <div class="achievement-card">
-                    <h3>🚀 Successful Product Launch</h3>
-                    <p>Led technical team for successful launch of 3 major products, each serving 50,000+ active users.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact">
-            <h2>Get In Touch</h2>
-            <div style="text-align: center;">
-                <p style="margin-bottom: 1.5rem; color: #555; font-size: 1.1rem;">
-                    I'm always interested in hearing about new projects and opportunities. Feel free to reach out!
-                </p>
-                <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-                    <div>
-                        <strong style="color: #764ba2;">Email</strong><br>
-                        <a href="mailto:habibur@example.com" style="color: #667eea; text-decoration: none;">habibur@example.com</a>
-                    </div>
-                    <div>
-                        <strong style="color: #764ba2;">Phone</strong><br>
-                        <a href="tel:+1234567890" style="color: #667eea; text-decoration: none;">+1 (234) 567-890</a>
-                    </div>
-                    <div>
-                        <strong style="color: #764ba2;">Location</strong><br>
-                        <span style="color: #555;">City, Country</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer>
-            <p>&copy; 2026 MD. HABIBUR RAHMAN. All rights reserved.</p>
-            <p>Portfolio Last Updated: January 8, 2026</p>
-            <p style="font-size: 0.9rem; margin-top: 1rem;">
-                <a href="https://github.com/mdhabib99" style="color: #667eea; text-decoration: none; margin: 0 0.5rem;">GitHub</a> | 
-                <a href="https://linkedin.com/in/mdhabibur-rahman" style="color: #667eea; text-decoration: none; margin: 0 0.5rem;">LinkedIn</a> | 
-                <a href="https://twitter.com/mdhabib99" style="color: #667eea; text-decoration: none; margin: 0 0.5rem;">Twitter</a>
-            </p>
-        </footer>
-    </div>
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
 </body>
 </html>
+I made some changes. Ami JavaScript-e `addEventListener` er implementation thik korechi, jate `this.getAttribute` thik bhabe kaj kore. Smooth scrolling ekhon kono error charai kaj korbe.
