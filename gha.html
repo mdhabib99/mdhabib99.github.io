@@ -1,0 +1,537 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Product Support Manager Assessment</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --google-blue: #1a73e8;
+            --google-red: #ea4335;
+            --google-yellow: #fbbc05;
+            --google-green: #34a853;
+            --text-dark: #202124;
+            --text-gray: #5f6368;
+            --bg-light: #f8f9fa;
+            --border-light: #dadce0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Google Sans', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Responsive Container */
+        #root {
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in { animation: fadeIn 0.3s ease forwards; }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 768px) {
+            .main-layout {
+                flex-direction: column !important;
+            }
+            .sidebar {
+                width: 100% !important;
+                border-right: none !important;
+                border-bottom: 1px solid var(--border-light);
+                padding: 15px !important;
+            }
+            .main-content {
+                padding: 20px 15px !important;
+            }
+            .q-grid {
+                grid-template-columns: repeat(8, 1fr) !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const QUESTIONS = [
+            {
+                id: 1,
+                section: "Situational Judgment",
+                type: "mcq",
+                difficulty: "Medium",
+                question: "A high-priority enterprise customer escalates a P1 bug affecting 10,000 users. Your engineering team says a fix will take 3 business days, but the customer demands resolution by end of day. What is your FIRST action?",
+                options: [
+                    "Commit to the customer’s deadline to retain the relationship",
+                    "Immediately escalate to your VP to get more engineering resources",
+                    "Acknowledge the issue, set honest expectations, and provide a workaround if possible",
+                    "Ask the engineering team to work overtime to meet the deadline",
+                ],
+                correct: 2,
+                explanation: "Transparency builds trust. Acknowledge the impact, offer interim workarounds, and set realistic timelines. Overpromising damages long-term relationships more than an honest timeline does.",
+            },
+            {
+                id: 2,
+                section: "Technical Acumen",
+                type: "mcq",
+                difficulty: "Hard",
+                question: "A customer reports that their API calls are returning intermittent 503 errors — roughly 2% of requests. Your logs show no anomalies on your end. What is the most likely root cause to investigate FIRST?",
+                options: [
+                    "A bug in the customer’s authentication token refresh logic",
+                    "Client-side rate limiting or exponential backoff not implemented",
+                    "A regional network issue or ISP routing problem between the client and your servers",
+                    "The customer’s SDK version is outdated",
+                ],
+                correct: 2,
+                explanation: "Intermittent, low-percentage 503s with no server-side anomalies most commonly point to network path issues. Client-side retry/backoff problems would show different patterns.",
+            },
+            {
+                id: 3,
+                section: "Data & Metrics",
+                type: "mcq",
+                difficulty: "Medium",
+                question: "Your support team’s CSAT score dropped from 88% to 74% over 4 weeks. Ticket volume is unchanged. Which metric combination would BEST help you diagnose the root cause?",
+                options: [
+                    "First Response Time (FRT) and Number of tickets closed per agent",
+                    "First Contact Resolution (FCR) rate, Average Handle Time, and agent CSAT breakdown",
+                    "Ticket backlog size and SLA breach rate",
+                    "NPS score trend and customer churn rate",
+                ],
+                correct: 1,
+                explanation: "FCR tells you if issues are being truly resolved. Handle time indicates quality vs. speed tradeoffs. Agent-level CSAT breakdown identifies if it’s systemic or isolated.",
+            },
+            {
+                id: 4,
+                section: "Cross-Functional Leadership",
+                type: "mcq",
+                difficulty: "Hard",
+                question: "Product ships a feature that significantly changes the UI. Your support queue spikes by 40% with confused users. The Product team believes the UI is intuitive. How do you approach this cross-functional conflict?",
+                options: [
+                    "Raise a formal complaint with Product leadership about inadequate user testing",
+                    "Present aggregated ticket data, user verbatims, and proposed in-app tooltip solutions as a joint initiative",
+                    "Tell your team to create knowledge base articles and absorb the ticket volume",
+                    "Request a rollback of the feature until the UI is improved",
+                ],
+                correct: 1,
+                explanation: "Data-led collaboration drives change. Presenting quantitative evidence (ticket spike) with qualitative proof (user verbatims) aligns incentives.",
+            },
+            {
+                id: 5,
+                section: "Process & Scalability",
+                type: "mcq",
+                difficulty: "Medium",
+                question: "You manage a support team of 12. Response times have increased as the product grows. Which approach is most aligned with Google’s support philosophy at scale?",
+                options: [
+                    "Hire 6 additional support agents to match ticket volume growth",
+                    "Implement tiered support: self-service deflection, community forums, and AI-assisted triage before human escalation",
+                    "Outsource tier-1 support to a BPO to reduce cost",
+                    "Require all engineers to rotate on support duty monthly",
+                ],
+                correct: 1,
+                explanation: "Google’s support philosophy prioritizes scalable, self-serve systems. Deflecting common issues via help center and AI frees human agents for complex cases.",
+            },
+            {
+                id: 6,
+                section: "Customer Empathy",
+                type: "mcq",
+                difficulty: "Easy",
+                question: "A long-term customer is frustrated and writes: ‘This is the third time this year I’ve had to contact support for the same issue. I’m done dealing with this.’ What is the BEST response approach?",
+                options: [
+                    "Apologize and send a $100 account credit",
+                    "Escalate immediately to a senior engineer without replying to the customer first",
+                    "Acknowledge the repeated frustration genuinely, take ownership, investigate the recurrence pattern, and commit to a permanent resolution plan",
+                    "Explain that the issues were different each time and provide documentation",
+                ],
+                correct: 2,
+                explanation: "Repeat issues signal a systemic failure. Acknowledging the journey and owning the pattern demonstrates genuine empathy and builds trust.",
+            },
+            {
+                id: 7,
+                section: "Strategic Thinking",
+                type: "mcq",
+                difficulty: "Hard",
+                question: "You notice that 35% of support tickets in the last quarter fall into 5 repeating categories. As a Product Support Manager, what is the HIGHEST-leverage action?",
+                options: [
+                    "Create detailed internal runbooks so agents resolve these faster",
+                    "Present a product/UX improvement roadmap to eliminate the root causes of these ticket categories",
+                    "Build a help center FAQ covering all 5 categories",
+                    "Assign a specialist agent to each of the 5 categories",
+                ],
+                correct: 1,
+                explanation: "The highest-leverage action is eliminating the source of tickets. Influencing the product roadmap fixes root-cause gaps permanently.",
+            },
+            {
+                id: 8,
+                section: "People Management",
+                type: "mcq",
+                difficulty: "Medium",
+                question: "A top-performing support agent starts missing SLAs and submitting careless responses. No personal issues have been disclosed. What is your first step as their manager?",
+                options: [
+                    "Place them on a formal Performance Improvement Plan (PIP)",
+                    "Reassign their accounts to protect customer experience",
+                    "Have a private, empathetic 1:1 to understand what has changed, before drawing any conclusions",
+                    "Review their recent tickets and send written feedback on specific errors",
+                ],
+                correct: 2,
+                explanation: "Behavioral changes in high performers often signal disengagement or burnout. A private conversation first respects the person and surfaces solvable problems.",
+            },
+        ];
+
+        const SECTION_COLORS = {
+            "Situational Judgment": "#1a73e8",
+            "Technical Acumen": "#e8710a",
+            "Data & Metrics": "#188038",
+            "Cross-Functional Leadership": "#a142f4",
+            "Process & Scalability": "#1a73e8",
+            "Customer Empathy": "#188038",
+            "Strategic Thinking": "#e8710a",
+            "People Management": "#a142f4",
+        };
+
+        const DIFFICULTY_COLORS = {
+            Easy: { bg: "#e6f4ea", text: "#188038" },
+            Medium: { bg: "#fef7e0", text: "#e37400" },
+            Hard: { bg: "#fce8e6", text: "#c5221f" },
+        };
+
+        const App = () => {
+            const [screen, setScreen] = useState("intro");
+            const [current, setCurrent] = useState(0);
+            const [answers, setAnswers] = useState({});
+            const [selected, setSelected] = useState(null);
+            const [revealed, setRevealed] = useState(false);
+            const [timeLeft, setTimeLeft] = useState(20 * 60);
+            const [flagged, setFlagged] = useState(new Set());
+            const timerRef = useRef(null);
+
+            useEffect(() => {
+                if (screen === "test") {
+                    timerRef.current = setInterval(() => {
+                        setTimeLeft((t) => {
+                            if (t <= 1) {
+                                clearInterval(timerRef.current);
+                                setScreen("results");
+                                return 0;
+                            }
+                            return t - 1;
+                        });
+                    }, 1000);
+                }
+                return () => clearInterval(timerRef.current);
+            }, [screen]);
+
+            const q = QUESTIONS[current];
+            const mins = String(Math.floor(timeLeft / 60)).padStart(2, "0");
+            const secs = String(timeLeft % 60).padStart(2, "0");
+            const timerWarning = timeLeft < 300;
+
+            const score = QUESTIONS.filter((q) => answers[q.id] === q.correct).length;
+            const pct = Math.round((score / QUESTIONS.length) * 100);
+
+            const handleSelect = (idx) => {
+                if (revealed) return;
+                setSelected(idx);
+            };
+
+            const handleCheck = () => {
+                if (selected === null) return;
+                setRevealed(true);
+                setAnswers((prev) => ({ ...prev, [q.id]: selected }));
+            };
+
+            const handleNext = () => {
+                setSelected(null);
+                setRevealed(false);
+                if (current + 1 >= QUESTIONS.length) {
+                    clearInterval(timerRef.current);
+                    setScreen("results");
+                } else {
+                    const nextIdx = current + 1;
+                    setCurrent(nextIdx);
+                    // Check if next question was already answered
+                    const previousAnswer = answers[QUESTIONS[nextIdx].id];
+                    if (previousAnswer !== undefined) {
+                        setSelected(previousAnswer);
+                        setRevealed(true);
+                    }
+                }
+            };
+
+            const handleJump = (idx) => {
+                setCurrent(idx);
+                const previousAnswer = answers[QUESTIONS[idx].id];
+                if (previousAnswer !== undefined) {
+                    setSelected(previousAnswer);
+                    setRevealed(true);
+                } else {
+                    setSelected(null);
+                    setRevealed(false);
+                }
+            };
+
+            const toggleFlag = (idx) => {
+                setFlagged((prev) => {
+                    const next = new Set(prev);
+                    if (next.has(idx)) next.delete(idx);
+                    else next.add(idx);
+                    return next;
+                });
+            };
+
+            if (screen === "intro") {
+                return (
+                    <div style={styles.introContainer} className="fade-in">
+                        <div style={styles.googleLogo}>
+                            <span style={{ color: "#4285F4" }}>G</span>
+                            <span style={{ color: "#EA4335" }}>o</span>
+                            <span style={{ color: "#FBBC05" }}>o</span>
+                            <span style={{ color: "#4285F4" }}>g</span>
+                            <span style={{ color: "#34A853" }}>l</span>
+                            <span style={{ color: "#EA4335" }}>e</span>
+                        </div>
+                        <h1 style={{ fontSize: '24px', marginBottom: '8px' }}>Hiring Assessment</h1>
+                        <p style={{ color: 'var(--text-gray)', marginBottom: '30px' }}>Product Support Manager · 2025 Edition</p>
+                        
+                        <div style={styles.metaGrid}>
+                            <div style={styles.metaItem}>⏱ 20 Minutes</div>
+                            <div style={styles.metaItem}>❓ 8 Scenarios</div>
+                            <div style={styles.metaItem}>📊 8 Competencies</div>
+                        </div>
+
+                        <div style={styles.introNote}>
+                            <strong>Pro Tip:</strong> Google values user-first thinking and scalable solutions. Choose the most analytical and collaborative options.
+                        </div>
+
+                        <button style={styles.primaryBtn} onClick={() => setScreen("test")}>
+                            Start Assessment
+                        </button>
+                    </div>
+                );
+            }
+
+            if (screen === "results") {
+                const grade = pct >= 80 ? { label: "Exceptional", color: "#188038", bg: "#e6f4ea" } : pct >= 60 ? { label: "Qualified", color: "#e37400", bg: "#fef7e0" } : { label: "Not Yet Ready", color: "#c5221f", bg: "#fce8e6" };
+                return (
+                    <div style={styles.resultsCard} className="fade-in">
+                        <h2 style={{ marginBottom: '10px' }}>Assessment Complete</h2>
+                        <div style={{ ...styles.scoreCircle, borderColor: grade.color }}>
+                            <div style={{ fontSize: '32px', fontWeight: 'bold', color: grade.color }}>{pct}%</div>
+                            <div style={{ fontSize: '12px', color: 'var(--text-gray)' }}>{score}/{QUESTIONS.length} Correct</div>
+                        </div>
+                        <div style={{ ...styles.badge, background: grade.bg, color: grade.color }}>{grade.label}</div>
+                        
+                        <div style={styles.breakdownList}>
+                            {QUESTIONS.map((q, i) => (
+                                <div key={q.id} style={styles.breakdownRow}>
+                                    <div style={{
+                                        ...styles.statusDot, 
+                                        backgroundColor: answers[q.id] === q.correct ? '#34a853' : '#ea4335'
+                                    }}>
+                                        {answers[q.id] === q.correct ? "✓" : "✗"}
+                                    </div>
+                                    <div style={{ flex: 1, textAlign: 'left' }}>
+                                        <div style={{ fontSize: '11px', color: 'var(--text-gray)' }}>{q.section}</div>
+                                        <div style={{ fontSize: '13px', fontWeight: '500' }}>{q.question.substring(0, 50)}...</div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <button style={styles.primaryBtn} onClick={() => window.location.reload()}>
+                            Retake Assessment
+                        </button>
+                    </div>
+                );
+            }
+
+            return (
+                <div style={styles.testWrapper} className="fade-in">
+                    {/* Header */}
+                    <div style={styles.header}>
+                        <div style={styles.googleLogoSmall}>
+                            <span style={{ color: "#4285F4" }}>G</span><span style={{ color: "#EA4335" }}>o</span><span style={{ color: "#FBBC05" }}>o</span><span style={{ color: "#4285F4" }}>g</span><span style={{ color: "#34A853" }}>l</span><span style={{ color: "#EA4335" }}>e</span>
+                        </div>
+                        <div style={{ ...styles.timer, color: timerWarning ? 'var(--google-red)' : 'var(--text-dark)', backgroundColor: timerWarning ? '#fce8e6' : '#f1f3f4' }}>
+                            {mins}:{secs}
+                        </div>
+                    </div>
+
+                    <div style={styles.mainLayout} className="main-layout">
+                        {/* Sidebar */}
+                        <div style={styles.sidebar} className="sidebar">
+                            <div style={{ fontSize: '12px', fontWeight: 'bold', color: 'var(--text-gray)', marginBottom: '10px' }}>NAVIGATOR</div>
+                            <div style={styles.qGrid} className="q-grid">
+                                {QUESTIONS.map((_, i) => (
+                                    <button
+                                        key={i}
+                                        onClick={() => handleJump(i)}
+                                        style={{
+                                            ...styles.qBtn,
+                                            backgroundColor: i === current ? 'var(--google-blue)' : (answers[QUESTIONS[i].id] !== undefined ? '#e6f4ea' : '#fff'),
+                                            color: i === current ? '#fff' : (answers[QUESTIONS[i].id] !== undefined ? '#188038' : '#202124'),
+                                            borderColor: flagged.has(i) ? 'var(--google-yellow)' : 'var(--border-light)',
+                                            borderWidth: flagged.has(i) ? '2px' : '1px'
+                                        }}
+                                    >
+                                        {flagged.has(i) ? "⚑" : i + 1}
+                                    </button>
+                                ))}
+                            </div>
+                            
+                            <div style={{ marginTop: '20px' }}>
+                                <div style={{ fontSize: '11px', display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
+                                    <span>Progress</span>
+                                    <span>{Object.keys(answers).length}/{QUESTIONS.length}</span>
+                                </div>
+                                <div style={styles.progressBase}>
+                                    <div style={{ ...styles.progressFill, width: `${(Object.keys(answers).length / QUESTIONS.length) * 100}%` }} />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Main Content */}
+                        <div style={styles.mainContent} className="main-content">
+                            <div style={styles.qTopBar}>
+                                <div style={{ ...styles.badge, background: SECTION_COLORS[q.section] + '15', color: SECTION_COLORS[q.section], borderColor: SECTION_COLORS[q.section] + '30' }}>
+                                    {q.section}
+                                </div>
+                                <button onClick={() => toggleFlag(current)} style={styles.flagToggle}>
+                                    {flagged.has(current) ? "⚑ Flagged" : "⚐ Flag for Review"}
+                                </button>
+                            </div>
+
+                            <h2 style={styles.questionText}>{q.question}</h2>
+
+                            <div style={styles.optionsList}>
+                                {q.options.map((opt, i) => {
+                                    let btnStyle = { ...styles.optBtn };
+                                    if (selected === i && !revealed) {
+                                        btnStyle.borderColor = 'var(--google-blue)';
+                                        btnStyle.backgroundColor = '#e8f0fe';
+                                    }
+                                    if (revealed) {
+                                        if (i === q.correct) {
+                                            btnStyle.borderColor = 'var(--google-green)';
+                                            btnStyle.backgroundColor = '#e6f4ea';
+                                            btnStyle.color = '#188038';
+                                        } else if (i === selected) {
+                                            btnStyle.borderColor = 'var(--google-red)';
+                                            btnStyle.backgroundColor = '#fce8e6';
+                                            btnStyle.color = '#c5221f';
+                                        } else {
+                                            btnStyle.opacity = 0.5;
+                                        }
+                                    }
+
+                                    return (
+                                        <button key={i} onClick={() => handleSelect(i)} style={btnStyle}>
+                                            <div style={{
+                                                ...styles.optLetter,
+                                                backgroundColor: (selected === i || (revealed && i === q.correct)) ? 'inherit' : '#f1f3f4',
+                                                border: (selected === i || (revealed && i === q.correct)) ? '1px solid currentColor' : 'none'
+                                            }}>
+                                                {String.fromCharCode(65 + i)}
+                                            </div>
+                                            <span style={{ flex: 1 }}>{opt}</span>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+
+                            {revealed && (
+                                <div style={styles.explanationBox} className="fade-in">
+                                    <div style={{ fontWeight: 'bold', marginBottom: '5px', color: 'var(--google-blue)' }}>Rationale:</div>
+                                    <div style={{ fontSize: '14px', lineHeight: '1.5' }}>{q.explanation}</div>
+                                </div>
+                            )}
+
+                            <div style={styles.footerActions}>
+                                {!revealed ? (
+                                    <button 
+                                        style={{ ...styles.primaryBtn, opacity: selected === null ? 0.5 : 1 }} 
+                                        disabled={selected === null}
+                                        onClick={handleCheck}
+                                    >
+                                        Check Answer
+                                    </button>
+                                ) : (
+                                    <button style={styles.primaryBtn} onClick={handleNext}>
+                                        {current === QUESTIONS.length - 1 ? "Finish Assessment" : "Next Question →"}
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const styles = {
+            introContainer: {
+                maxWidth: '500px',
+                width: '100%',
+                background: '#fff',
+                borderRadius: '24px',
+                padding: '40px',
+                textAlign: 'center',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                alignSelf: 'center'
+            },
+            googleLogo: { fontSize: '48px', fontWeight: 'bold', letterSpacing: '-2px', marginBottom: '20px' },
+            googleLogoSmall: { fontSize: '20px', fontWeight: 'bold' },
+            metaGrid: { display: 'flex', gap: '10px', justifyContent: 'center', marginBottom: '30px', flexWrap: 'wrap' },
+            metaItem: { background: '#f1f3f4', padding: '8px 16px', borderRadius: '20px', fontSize: '13px' },
+            introNote: { background: '#e8f0fe', padding: '15px', borderRadius: '12px', fontSize: '14px', color: '#1a73e8', textAlign: 'left', marginBottom: '30px', border: '1px solid #c5d9f7' },
+            primaryBtn: { background: 'var(--google-blue)', color: '#fff', border: 'none', padding: '12px 30px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', fontSize: '15px', width: '100%' },
+            testWrapper: { maxWidth: '1000px', width: '100%', display: 'flex', flexDirection: 'column', gap: '15px' },
+            header: { background: '#fff', padding: '15px 25px', borderRadius: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' },
+            timer: { padding: '6px 15px', borderRadius: '8px', fontWeight: 'bold', fontSize: '16px' },
+            mainLayout: { display: 'flex', background: '#fff', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 4px 20px rgba(0,0,0,0.06)', minHeight: '600px' },
+            sidebar: { width: '220px', background: '#f8f9fa', padding: '25px', borderRight: '1px solid var(--border-light)' },
+            qGrid: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' },
+            qBtn: { aspectRatio: '1', borderRadius: '8px', border: '1px solid var(--border-light)', cursor: 'pointer', fontSize: '14px', transition: 'all 0.2s' },
+            mainContent: { flex: 1, padding: '40px', display: 'flex', flexDirection: 'column' },
+            qTopBar: { display: 'flex', justifyContent: 'space-between', marginBottom: '20px' },
+            badge: { padding: '4px 12px', borderRadius: '15px', fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', border: '1px solid transparent' },
+            flagToggle: { background: 'none', border: 'none', color: var('--text-gray'), cursor: 'pointer', fontSize: '13px' },
+            questionText: { fontSize: '20px', lineHeight: '1.4', marginBottom: '30px', fontWeight: '500' },
+            optionsList: { display: 'flex', flexDirection: 'column', gap: '12px', flex: 1 },
+            optBtn: { display: 'flex', alignItems: 'center', padding: '15px', borderRadius: '12px', border: '2px solid var(--border-light)', background: '#fff', cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s', gap: '15px', fontSize: '15px' },
+            optLetter: { width: '28px', height: '28px', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '12px' },
+            explanationBox: { marginTop: '25px', padding: '20px', borderRadius: '12px', background: '#f1f8ff', border: '1px solid #c5d9f7' },
+            footerActions: { marginTop: '30px', display: 'flex', justifyContent: 'flex-end' },
+            progressBase: { height: '8px', background: '#e8eaed', borderRadius: '4px', overflow: 'hidden' },
+            progressFill: { height: '100%', background: 'var(--google-blue)', transition: 'width 0.3s ease' },
+            resultsCard: { maxWidth: '600px', width: '100%', background: '#fff', padding: '40px', borderRadius: '24px', textAlign: 'center', alignSelf: 'center', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' },
+            scoreCircle: { width: '120px', height: '120px', borderRadius: '50%', border: '8px solid', margin: '20px auto', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' },
+            breakdownList: { margin: '30px 0', textAlign: 'left' },
+            breakdownRow: { display: 'flex', gap: '15px', padding: '12px', background: '#f8f9fa', borderRadius: '10px', marginBottom: '8px', alignItems: 'center' },
+            statusDot: { width: '24px', height: '24px', borderRadius: '50%', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 'bold' }
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
+
+```
