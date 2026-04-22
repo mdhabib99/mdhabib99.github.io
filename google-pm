@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Product Support Manager Assessment</title>
+    <!-- React & Babel CDNs -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; }
+        @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap');
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // ─── 75 QUESTIONS ─────────────────────────────────────────────────────────────
+        const QUESTIONS = [
+            { id:1,  cat:"Customer Focus", reverse:false, text:"I go out of my way to understand a customer’s situation before suggesting a solution." },
+            { id:2,  cat:"Customer Focus", reverse:false, text:"I believe every customer interaction is an opportunity to build long-term trust." },
+            { id:3,  cat:"Customer Focus", reverse:false, text:"When a customer is upset, I focus on understanding their frustration before defending my product or team." },
+            { id:4,  cat:"Customer Focus", reverse:true,  text:"I find it acceptable to close a support ticket once the immediate issue is resolved, even if the root cause is unclear." },
+            { id:5,  cat:"Customer Focus", reverse:false, text:"I proactively communicate updates to customers even when there is no new resolution to share." },
+            { id:6,  cat:"Customer Focus", reverse:false, text:"I treat a customer’s time as more valuable than my own convenience." },
+            { id:7,  cat:"Customer Focus", reverse:true,  text:"Meeting the SLA target is more important than fully resolving a customer’s underlying concern." },
+            { id:8,  cat:"Customer Focus", reverse:false, text:"I consistently seek feedback from customers to improve service quality." },
+            { id:9,  cat:"Customer Focus", reverse:false, text:"I can empathize with a customer even when their frustration feels unfair or misdirected." },
+            { id:10, cat:"Customer Focus", reverse:true,  text:"Repeat contacts from the same customer usually indicate the customer is not following instructions properly." },
+            { id:11, cat:"Leadership & People Mgmt",  reverse:false, text:"I believe developing my team’s skills is one of my primary responsibilities as a manager." },
+            { id:12, cat:"Leadership & People Mgmt",  reverse:false, text:"I hold myself to the same standards I expect from my team members." },
+            { id:13, cat:"Leadership & People Mgmt",  reverse:false, text:"When a team member underperforms, I first seek to understand the cause before taking corrective action." },
+            { id:14, cat:"Leadership & People Mgmt",  reverse:true,  text:"A manager’s job is primarily to ensure tasks are completed, not to focus on employee development." },
+            { id:15, cat:"Leadership & People Mgmt",  reverse:false, text:"I actively create an environment where team members feel safe raising concerns or mistakes." },
+            { id:16, cat:"Leadership & People Mgmt",  reverse:false, text:"I give credit to my team publicly and take responsibility for failures privately." },
+            { id:17, cat:"Leadership & People Mgmt",  reverse:true,  text:"I prefer to handle difficult conversations with team members via written communication rather than in person." },
+            { id:18, cat:"Leadership & People Mgmt",  reverse:false, text:"I regularly invest time in 1:1 conversations focused on each team member’s growth and well-being." },
+            { id:19, cat:"Leadership & People Mgmt",  reverse:false, text:"I believe diverse perspectives within a team lead to better outcomes." },
+            { id:20, cat:"Leadership & People Mgmt",  reverse:true,  text:"Top performers should be left alone; coaching resources are best spent on low performers." },
+            { id:21, cat:"Problem Solving", reverse:false, text:"When faced with a complex problem, I break it down into smaller components before acting." },
+            { id:22, cat:"Problem Solving", reverse:false, text:"I rely on data and evidence rather than gut feeling when diagnosing issues." },
+            { id:23, cat:"Problem Solving", reverse:true,  text:"Finding a workaround for a customer is just as satisfying as fixing the root cause of an issue." },
+            { id:24, cat:"Problem Solving", reverse:false, text:"I look for patterns across multiple incidents to identify systemic issues." },
+            { id:25, cat:"Problem Solving", reverse:false, text:"I challenge my own assumptions when my initial diagnosis doesn’t explain all the evidence." },
+            { id:26, cat:"Problem Solving", reverse:true,  text:"If a problem is taking too long to solve, it is acceptable to escalate it without fully documenting what you’ve tried." },
+            { id:27, cat:"Problem Solving", reverse:false, text:"I can clearly articulate a problem statement before jumping to solutions." },
+            { id:28, cat:"Problem Solving", reverse:false, text:"I use post-mortems or retrospectives to prevent recurring issues." },
+            { id:29, cat:"Problem Solving", reverse:false, text:"When solving problems, I consider second-order effects of potential solutions." },
+            { id:30, cat:"Problem Solving", reverse:true,  text:"In high-pressure situations, acting quickly is more important than acting correctly." },
+            { id:31, cat:"Communication", reverse:false, text:"I tailor the way I communicate depending on the audience — technical, executive, or end user." },
+            { id:32, cat:"Communication", reverse:false, text:"I listen fully to understand before formulating my response." },
+            { id:33, cat:"Communication", reverse:true,  text:"Being direct is more important than ensuring the other person feels heard." },
+            { id:34, cat:"Communication", reverse:false, text:"I communicate bad news as promptly and clearly as I would good news." },
+            { id:35, cat:"Communication", reverse:false, text:"I actively work to resolve misunderstandings quickly rather than letting them linger." },
+            { id:36, cat:"Communication", reverse:false, text:"I collaborate with other teams even when it means sharing credit or slowing my own pace." },
+            { id:37, cat:"Communication", reverse:true,  text:"When cross-functional teams disagree with my approach, I generally find it easier to work around them." },
+            { id:38, cat:"Communication", reverse:false, text:"I ensure my written communication is clear, concise, and free of unnecessary jargon." },
+            { id:39, cat:"Communication", reverse:false, text:"I am comfortable giving constructive feedback to peers and not just to direct reports." },
+            { id:40, cat:"Communication", reverse:true,  text:"In a meeting, it is better to dominate the conversation to ensure your ideas are heard." },
+            { id:41, cat:"Adaptability", reverse:false, text:"I remain calm and effective when facing ambiguous or rapidly changing situations." },
+            { id:42, cat:"Adaptability", reverse:false, text:"I view setbacks as learning opportunities rather than failures." },
+            { id:43, cat:"Adaptability", reverse:true,  text:"I find frequent process or product changes disruptive and prefer stability." },
+            { id:44, cat:"Adaptability", reverse:false, text:"I can manage multiple competing priorities without a significant drop in work quality." },
+            { id:45, cat:"Adaptability", reverse:false, text:"I adjust my leadership style based on the needs and maturity of each team member." },
+            { id:46, cat:"Adaptability", reverse:true,  text:"Once I have a system that works well, I resist changing it even if a better option becomes available." },
+            { id:47, cat:"Adaptability", reverse:false, text:"I actively seek out new tools or approaches to improve how I and my team work." },
+            { id:48, cat:"Adaptability", reverse:false, text:"I can maintain a positive team environment even during periods of high uncertainty." },
+            { id:49, cat:"Adaptability", reverse:false, text:"When priorities shift unexpectedly, I re-plan quickly and communicate changes clearly to stakeholders." },
+            { id:50, cat:"Strategic Thinking", reverse:false, text:"I consistently connect my team’s day-to-day work to the broader company goals." },
+            { id:51, cat:"Strategic Thinking", reverse:false, text:"I use support data and trends to influence product and engineering decisions." },
+            { id:52, cat:"Strategic Thinking", reverse:true,  text:"Support operations are a cost center and should focus primarily on efficiency, not business impact." },
+            { id:53, cat:"Strategic Thinking", reverse:false, text:"I proactively identify risks before they become critical issues." },
+            { id:54, cat:"Strategic Thinking", reverse:false, text:"I think about scalable solutions rather than one-off fixes for recurring problems." },
+            { id:55, cat:"Strategic Thinking", reverse:true,  text:"Long-term planning is less important in a support role than responding to what’s in the queue right now." },
+            { id:56, cat:"Strategic Thinking", reverse:false, text:"I can build a compelling business case to gain leadership’s support for an initiative." },
+            { id:57, cat:"Strategic Thinking", reverse:false, text:"I factor in customer lifetime value when prioritizing support resources." },
+            { id:58, cat:"Strategic Thinking", reverse:false, text:"I track industry benchmarks and use them to continuously raise my team’s standards." },
+            { id:59, cat:"Strategic Thinking", reverse:true,  text:"Operational metrics (like ticket volume handled) are more meaningful than outcome metrics (like FCR or CSAT)." },
+            { id:60, cat:"Integrity & Accountability", reverse:false, text:"I take personal responsibility when a process I own fails, rather than attributing it to external factors." },
+            { id:61, cat:"Integrity & Accountability", reverse:false, text:"I am willing to admit a mistake to a customer even when it reflects poorly on my team." },
+            { id:62, cat:"Integrity & Accountability", reverse:true,  text:"It is sometimes acceptable to set a slightly optimistic expectation with a customer to reduce immediate tension." },
+            { id:63, cat:"Integrity & Accountability", reverse:false, text:"I follow through on every commitment I make, even small ones." },
+            { id:64, cat:"Integrity & Accountability", reverse:false, text:"I raise ethical concerns even when doing so might be professionally uncomfortable." },
+            { id:65, cat:"Integrity & Accountability", reverse:true,  text:"When a team error occurs, it is better to resolve the situation quietly rather than communicating it broadly." },
+            { id:66, cat:"Integrity & Accountability", reverse:false, text:"I hold my team to the same ethical standards I hold myself." },
+            { id:67, cat:"Integrity & Accountability", reverse:false, text:"Transparency with stakeholders is more important to me than protecting my team from scrutiny." },
+            { id:68, cat:"Drive & Initiative", reverse:false, text:"I regularly take on work beyond my defined role when I see an opportunity to create impact." },
+            { id:69, cat:"Drive & Initiative", reverse:false, text:"I set ambitious goals for myself and my team and actively work toward them." },
+            { id:70, cat:"Drive & Initiative", reverse:true,  text:"I wait for guidance before starting work on a problem that falls outside my immediate responsibilities." },
+            { id:71, cat:"Drive & Initiative", reverse:false, text:"I take ownership of a problem from start to finish, even when I need to involve others." },
+            { id:72, cat:"Drive & Initiative", reverse:false, text:"I am motivated by solving difficult challenges, not just completing routine tasks." },
+            { id:73, cat:"Drive & Initiative", reverse:true,  text:"I am satisfied once I meet my targets; exceeding them is not a priority." },
+            { id:74, cat:"Drive & Initiative", reverse:false, text:"I look for ways to automate or eliminate low-value work so I can focus on higher-impact activities." },
+            { id:75, cat:"Drive & Initiative", reverse:false, text:"I proactively share insights and improvements with colleagues, not just within my immediate team." }
+        ];
+
+        const SCALE = [
+            { value: 5, label: "Strongly Agree",    short: "SA" },
+            { value: 4, label: "Agree",             short: "A"  },
+            { value: 3, label: "Neutral",           short: "N"  },
+            { value: 2, label: "Disagree",          short: "D"  },
+            { value: 1, label: "Strongly Disagree", short: "SD" },
+        ];
+
+        const CATS = ["Customer Focus","Leadership & People Mgmt","Problem Solving","Communication","Adaptability","Strategic Thinking","Integrity & Accountability","Drive & Initiative"];
+
+        const CAT_COLORS = {
+            "Customer Focus":            "#1a73e8",
+            "Leadership & People Mgmt": "#e8710a",
+            "Problem Solving":           "#188038",
+            "Communication":             "#a142f4",
+            "Adaptability":              "#00897b",
+            "Strategic Thinking":        "#c5221f",
+            "Integrity & Accountability":"#1565c0",
+            "Drive & Initiative":        "#f57c00",
+        };
+
+        const CAT_ICONS = {
+            "Customer Focus":"🤝","Leadership & People Mgmt":"👥","Problem Solving":"🧩",
+            "Communication":"💬","Adaptability":"🌊","Strategic Thinking":"♟",
+            "Integrity & Accountability":"🔒","Drive & Initiative":"🚀"
+        };
+
+        const TOTAL_TIME = 30 * 60;
+        const PER_PAGE = 5;
+
+        // Styles
+        const s = {
+            card:{ background:"#fff", borderRadius:16, boxShadow:"0 2px 16px rgba(0,0,0,0.09)", padding:"36px 32px", maxWidth:600, width:"100%", margin:"0 auto" },
+            introRole:{ fontSize:18, fontWeight:700, color:"#202124", marginTop:8 },
+            introType:{ fontSize:13, color:"#5f6368", marginBottom:0 },
+            introDivider:{ height:1, background:"#e8eaed", margin:"20px 0" },
+            infoGrid:{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 },
+            scaleRow:{ display:"flex", flexDirection:"column", gap:6 },
+            scalePreview:{ display:"flex", alignItems:"center", gap:10, fontSize:13, color:"#3c4043" },
+            scaleDot:{ width:12, height:12, borderRadius:"50%", flexShrink:0 },
+            scalePreviewLabel:{ fontSize:13, color:"#3c4043" },
+            instrBox:{ background:"#f8f9fa", border:"1px solid #e8eaed", borderRadius:10, padding:"16px 18px", marginBottom:4 },
+            instrTitle:{ fontWeight:700, color:"#202124", marginBottom:8, fontSize:14 },
+            instrItem:{ fontSize:13, color:"#3c4043", lineHeight:1.7 },
+            startBtn:{ background:"#1a73e8", color:"#fff", border:"none", borderRadius:8, padding:"14px", fontSize:15, fontWeight:600, cursor:"pointer", width:"100%", marginTop:20 },
+            testWrap:{ maxWidth:1120, margin:"0 auto", display:"flex", flexDirection:"column", gap:0 },
+            topBar:{ background:"#fff", border:"1px solid #e8eaed", borderRadius:"12px 12px 0 0", padding:"10px 18px", display:"flex", alignItems:"center", gap:12 },
+            topRole:{ fontSize:13, color:"#5f6368", fontWeight:500 },
+            progressMini:{ display:"flex", flexDirection:"column", alignItems:"flex-end", gap:3 },
+            progressMiniText:{ fontSize:11, color:"#5f6368" },
+            progressMiniBar:{ width:120, height:5, background:"#e8eaed", borderRadius:3, overflow:"hidden" },
+            progressMiniFill:{ height:"100%", background:"#1a73e8", borderRadius:3, transition:"width 0.3s" },
+            timerBox:{ fontFamily:"monospace", fontWeight:700, fontSize:15, padding:"6px 14px", borderRadius:8, transition:"all 0.3s", flexShrink:0 },
+            body:{ display:"flex", background:"#fff", border:"1px solid #e8eaed", borderTop:"none", borderRadius:"0 0 12px 12px", overflow:"hidden" },
+            sidebar:{ width:160, background:"#f8f9fa", borderRight:"1px solid #e8eaed", padding:"16px 12px", flexShrink:0 },
+            sideTitle:{ fontSize:11, fontWeight:700, color:"#5f6368", textTransform:"uppercase", letterSpacing:0.8, marginBottom:10 },
+            pageBtn:{ width:"100%", display:"flex", justifyContent:"space-between", alignItems:"center", padding:"7px 10px", borderRadius:7, fontSize:12, cursor:"pointer", marginBottom:5, transition:"all 0.15s" },
+            sideStats:{ borderTop:"1px solid #e8eaed", marginTop:12, paddingTop:12 },
+            sideStatRow:{ display:"flex", justifyContent:"space-between", fontSize:12, marginBottom:6 },
+            sideStatLabel:{ color:"#5f6368" },
+            qArea:{ flex:1, padding:"20px 24px" },
+            pageHeader:{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:14 },
+            pageLabel:{ fontSize:12, fontWeight:700, color:"#5f6368", textTransform:"uppercase", letterSpacing:0.6 },
+            pageRange:{ fontSize:12, color:"#9aa0a6" },
+            scaleHeader:{ display:"flex", alignItems:"center", padding:"6px 0 10px 0", borderBottom:"1px solid #e8eaed", marginBottom:4 },
+            scaleHeadCell:{ width:52, display:"flex", flexDirection:"column", alignItems:"center", gap:3, flexShrink:0 },
+            scaleHeadDot:{ width:10, height:10, borderRadius:"50%" },
+            scaleHeadLabel:{ fontSize:9.5, color:"#5f6368", fontWeight:600, textAlign:"center", lineHeight:1.2 },
+            qRow:{ display:"flex", alignItems:"center", padding:"14px 12px 14px 14px", borderRadius:8, marginBottom:8, gap:12, transition:"background 0.15s" },
+            qLeft:{ display:"flex", alignItems:"flex-start", gap:10, flex:1, minWidth:0 },
+            qNumBadge:{ width:26, height:26, borderRadius:6, background:"#e8eaed", color:"#5f6368", fontSize:11, fontWeight:700, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, marginTop:2 },
+            qContent:{ flex:1, minWidth:0 },
+            qCatBadge:{ display:"inline-flex", alignItems:"center", gap:4, fontSize:10.5, fontWeight:600, padding:"2px 8px", borderRadius:20, marginBottom:5 },
+            qText:{ fontSize:13.5, color:"#202124", lineHeight:1.55 },
+            qOptions:{ display:"flex", gap:6, flexShrink:0 },
+            optCircle:{ width:34, height:34, borderRadius:"50%", cursor:"pointer", border:"1.5px solid #dadce0", display:"flex", alignItems:"center", justifyContent:"center", transition:"all 0.15s", flexShrink:0, background:"#fff" },
+            checkMark:{ fontSize:14, color:"#fff", fontWeight:700 },
+            navRow:{ display:"flex", alignItems:"center", justifyContent:"space-between", marginTop:20, paddingTop:16, borderTop:"1px solid #e8eaed" },
+            navBtn:{ background:"#fff", border:"1px solid #dadce0", borderRadius:8, padding:"10px 20px", fontSize:13, fontWeight:600, cursor:"pointer", color:"#3c4043" },
+            navBtnPrimary:{ background:"#1a73e8", border:"none", borderRadius:8, padding:"10px 22px", fontSize:13, fontWeight:600, cursor:"pointer", color:"#fff" },
+            navInfo:{ fontSize:13, color:"#5f6368" },
+            overallRow:{ display:"flex", alignItems:"flex-start", gap:24 },
+            overallRight:{ flex:1 },
+            gradeChip:{ display:"inline-block", padding:"5px 16px", borderRadius:20, fontWeight:700, fontSize:14, marginBottom:8 },
+            overallStat:{ fontSize:13, color:"#5f6368", marginBottom:6 },
+            unansweredNote:{ fontSize:12, color:"#e37400", marginBottom:6 },
+            overallSub:{ fontSize:13, color:"#3c4043", lineHeight:1.6 },
+            catTitle:{ fontSize:14, fontWeight:700, color:"#202124", marginBottom:12 },
+            catGrid:{ display:"flex", flexDirection:"column", gap:10 },
+            catCard:{ background:"#f8f9fa", border:"1px solid #e8eaed", borderRadius:10, padding:"12px 14px" },
+            catCardHeader:{ display:"flex", alignItems:"center", gap:8, marginBottom:8 },
+            catIcon:{ fontSize:16 },
+            catCardName:{ flex:1, fontSize:13, fontWeight:600, color:"#202124" },
+            catLevel:{ fontSize:11, fontWeight:700 },
+            catBarWrap:{ height:7, background:"#e8eaed", borderRadius:4, overflow:"hidden", marginBottom:4 },
+            catBar:{ height:"100%", borderRadius:4, transition:"width 0.8s ease" },
+            catPct:{ fontSize:12, fontWeight:700, color:"#5f6368", textAlign:"right" },
+            profileText:{ fontSize:14, color:"#3c4043", lineHeight:1.7, background:"#f8f9fa", border:"1px solid #e8eaed", borderRadius:10, padding:"14px 16px" },
+        };
+
+        function computeScore(answers) {
+            const catScores = {};
+            const catCounts = {};
+            CATS.forEach(c => { catScores[c] = 0; catCounts[c] = 0; });
+            QUESTIONS.forEach(q => {
+                const raw = answers[q.id];
+                if (raw === undefined) return;
+                const scored = q.reverse ? (6 - raw) : raw;
+                catScores[q.cat] += scored;
+                catCounts[q.cat]++;
+            });
+            const result = {};
+            CATS.forEach(c => {
+                result[c] = catCounts[c] > 0 ? Math.round((catScores[c] / (catCounts[c] * 5)) * 100) : 0;
+            });
+            const answeredCount = Object.keys(answers).length;
+            const total = answeredCount > 0 ? Math.round(QUESTIONS.reduce((acc,q) => {
+                const raw = answers[q.id]; if(raw===undefined) return acc;
+                return acc + (q.reverse ? (6-raw) : raw);
+            }, 0) / (answeredCount * 5) * 100) : 0;
+            return { catScores: result, total, answered: answeredCount };
+        }
+
+        function fmt(secs) {
+            const m = String(Math.floor(secs / 60)).padStart(2,"0");
+            const s = String(secs % 60).padStart(2,"0");
+            return `${m}:${s}`;
+        }
+
+        function scaleColor(v) {
+            return ["","#c5221f","#ea8600","#f9ab00","#34a853","#1a73e8"][v];
+        }
+
+        // --- COMPONENTS ---
+        function Wrap({ children }) {
+            return <div style={{ minHeight:"100vh", background:"#f0f4f9", fontFamily:"'Google Sans','Segoe UI',sans-serif", padding:"16px 12px" }}>{children}</div>;
+        }
+
+        function GLogo({ size=40 }) {
+            return (
+                <div style={{ fontSize:size, fontWeight:700, letterSpacing:-2, lineHeight:1, marginBottom:4 }}>
+                    <span style={{ color:"#4285F4" }}>G</span>
+                    <span style={{ color:"#EA4335" }}>o</span>
+                    <span style={{ color:"#FBBC05" }}>o</span>
+                    <span style={{ color:"#4285F4" }}>g</span>
+                    <span style={{ color:"#34A853" }}>l</span>
+                    <span style={{ color:"#EA4335" }}>e</span>
+                </div>
+            );
+        }
+
+        function InfoBox({ icon, title, sub }) {
+            return (
+                <div style={{ background:"#f8f9fa", border:"1px solid #e8eaed", borderRadius:10, padding:"14px 16px", textAlign:"center" }}>
+                    <div style={{ fontSize:22, marginBottom:4 }}>{icon}</div>
+                    <div style={{ fontSize:14, fontWeight:700, color:"#202124" }}>{title}</div>
+                    <div style={{ fontSize:11, color:"#5f6368", marginTop:2 }}>{sub}</div>
+                </div>
+            );
+        }
+
+        function ScoreRing({ pct, color }) {
+            const r = 52, c = 2*Math.PI*r;
+            return (
+                <div style={{ position:"relative", width:130, height:130, flexShrink:0 }}>
+                    <svg viewBox="0 0 120 120" style={{ width:130, height:130 }}>
+                        <circle cx="60" cy="60" r={r} fill="none" stroke="#e8eaed" strokeWidth={9}/>
+                        <circle cx="60" cy="60" r={r} fill="none" stroke={color} strokeWidth={9}
+                        strokeDasharray={`${(pct/100)*c} ${c}`} strokeLinecap="round" transform="rotate(-90 60 60)"/>
+                    </svg>
+                    <div style={{ position:"absolute",top:0,left:0,width:"100%",height:"100%",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center" }}>
+                        <span style={{ fontSize:26, fontWeight:700, color, lineHeight:1 }}>{pct}%</span>
+                        <span style={{ fontSize:10, color:"#5f6368", marginTop:2 }}>overall</span>
+                    </div>
+                </div>
+            );
+        }
+
+        function App() {
+            const [screen, setScreen] = useState("intro");
+            const [answers, setAnswers] = useState({});
+            const [page, setPage] = useState(0);
+            const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
+            const timerRef = useRef(null);
+            const topRef = useRef(null);
+
+            const totalPages = Math.ceil(QUESTIONS.length / PER_PAGE);
+            const pageQs = QUESTIONS.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
+            const answeredCount = Object.keys(answers).length;
+            const pctDone = Math.round((answeredCount / QUESTIONS.length) * 100);
+            const warn = timeLeft < 300;
+
+            useEffect(() => {
+                if (screen === "test") {
+                    timerRef.current = setInterval(() => setTimeLeft(t => { 
+                        if(t<=1){
+                            clearInterval(timerRef.current);
+                            setScreen("results");
+                            return 0;
+                        } 
+                        return t-1; 
+                    }), 1000);
+                }
+                return () => clearInterval(timerRef.current);
+            }, [screen]);
+
+            const answer = (id, val) => setAnswers(p => ({ ...p, [id]: val }));
+            const goPage = (n) => {
+                setPage(n);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+            const submit = () => {
+                clearInterval(timerRef.current);
+                setScreen("results");
+            };
+
+            const { catScores, total } = computeScore(answers);
+
+            if (screen === "intro") return (
+                <Wrap>
+                    <div style={s.card}>
+                        <GLogo size={44}/>
+                        <div style={s.introRole}>Hiring Assessment — Product Support Manager</div>
+                        <div style={s.introType}>Behavioral & Situational Judgment · Likert Scale</div>
+                        <div style={s.introDivider}/>
+                        <div style={s.infoGrid}>
+                            <InfoBox icon="⏱" title="30 Minutes" sub="Timed assessment"/>
+                            <InfoBox icon="📋" title="75 Questions" sub="All required"/>
+                            <InfoBox icon="📊" title="8 Competencies" sub="Profile report"/>
+                            <InfoBox icon="🎯" title="5-Point Scale" sub="SA → SD"/>
+                        </div>
+                        <div style={s.introDivider}/>
+                        <div style={s.scaleRow}>
+                            {SCALE.map(sc => (
+                                <div key={sc.value} style={s.scalePreview}>
+                                    <div style={{ ...s.scaleDot, background: scaleColor(sc.value) }}/>
+                                    <span style={s.scalePreviewLabel}>{sc.label}</span>
+                                </div>
+                            ))}
+                        </div>
+                        <div style={s.introDivider}/>
+                        <div style={s.instrBox}>
+                            <div style={s.instrTitle}>Instructions</div>
+                            <div style={s.instrItem}>· Read each statement carefully and select the option that best reflects how you think.</div>
+                            <div style={s.instrItem}>· There are no objectively right or wrong answers — respond honestly.</div>
+                            <div style={s.instrItem}>· You can navigate between pages freely before submitting.</div>
+                        </div>
+                        <button style={s.startBtn} onClick={() => setScreen("test")}>Start Assessment →</button>
+                    </div>
+                </Wrap>
+            );
+
+            if (screen === "results") {
+                const grade = total >= 85 ? {label:"Highly Aligned",color:"#188038",bg:"#e6f4ea"} :
+                              total >= 70 ? {label:"Strong Fit",    color:"#1a73e8",bg:"#e8f0fe"} :
+                              total >= 55 ? {label:"Moderate Fit",  color:"#e37400",bg:"#fef7e0"} :
+                                            {label:"Needs Development",color:"#c5221f",bg:"#fce8e6"};
+                return (
+                    <Wrap>
+                        <div style={{ ...s.card, maxWidth: 720 }}>
+                            <GLogo size={40}/>
+                            <div style={s.introRole}>Assessment Complete</div>
+                            <div style={s.introDivider}/>
+                            <div style={s.overallRow}>
+                                <ScoreRing pct={total} color={grade.color}/>
+                                <div style={s.overallRight}>
+                                    <div style={{ ...s.gradeChip, background:grade.bg, color:grade.color }}>{grade.label}</div>
+                                    <div style={s.overallStat}>{answeredCount} / 75 answered</div>
+                                    <div style={s.overallSub}>Your responses were evaluated across 8 competency dimensions.</div>
+                                </div>
+                            </div>
+                            <div style={s.introDivider}/>
+                            <div style={s.catGrid}>
+                                {CATS.map(cat => {
+                                    const sc = catScores[cat];
+                                    const col = CAT_COLORS[cat];
+                                    return (
+                                        <div key={cat} style={s.catCard}>
+                                            <div style={s.catCardHeader}>
+                                                <span>{CAT_ICONS[cat]} {cat}</span>
+                                                <span style={{fontWeight:700}}>{sc}%</span>
+                                            </div>
+                                            <div style={s.catBarWrap}>
+                                                <div style={{ ...s.catBar, width:`${sc}%`, background:col }}/>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                            <button style={{ ...s.startBtn, marginTop:24 }} onClick={() => window.location.reload()}>Retake Assessment</button>
+                        </div>
+                    </Wrap>
+                );
+            }
+
+            return (
+                <Wrap>
+                    <div style={s.testWrap}>
+                        <div style={s.topBar}>
+                            <GLogo size={26}/>
+                            <div style={{ flex:1 }}/>
+                            <div style={s.timerBox}>{fmt(timeLeft)}</div>
+                        </div>
+                        <div style={s.body}>
+                            <div style={s.sidebar}>
+                                <div style={s.sideTitle}>Navigation</div>
+                                {Array.from({ length: totalPages }, (_, pi) => (
+                                    <button key={pi} onClick={() => goPage(pi)} style={{
+                                        ...s.pageBtn,
+                                        background: page===pi ? "#1a73e8" : "#fff",
+                                        color: page===pi ? "#fff" : "#3c4043",
+                                        border: page===pi ? "2px solid #1a73e8" : "1px solid #dadce0"
+                                    }}>
+                                        Q{pi*PER_PAGE+1}–{Math.min(pi*PER_PAGE+PER_PAGE, 75)}
+                                    </button>
+                                ))}
+                            </div>
+                            <div style={s.qArea}>
+                                {pageQs.map((q, qi) => (
+                                    <div key={q.id} style={{ ...s.qRow, borderLeft:`3px solid ${CAT_COLORS[q.cat]}` }}>
+                                        <div style={s.qLeft}>
+                                            <div style={s.qNumBadge}>{page*PER_PAGE+qi+1}</div>
+                                            <div style={s.qContent}>
+                                                <div style={s.qText}>{q.text}</div>
+                                            </div>
+                                        </div>
+                                        <div style={s.qOptions}>
+                                            {SCALE.map(sc => (
+                                                <button key={sc.value} 
+                                                    onClick={() => answer(q.id, sc.value)}
+                                                    style={{ ...s.optCircle, background: answers[q.id]===sc.value ? scaleColor(sc.value) : "#fff", color: answers[q.id]===sc.value ? "#fff" : "#3c4043" }}>
+                                                    {sc.short}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                                <div style={s.navRow}>
+                                    <button onClick={() => goPage(page-1)} disabled={page===0} style={s.navBtn}>Previous</button>
+                                    {page < totalPages-1 ? 
+                                        <button onClick={() => goPage(page+1)} style={s.navBtnPrimary}>Next</button> :
+                                        <button onClick={submit} style={{ ...s.navBtnPrimary, background:"#188038" }}>Submit</button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Wrap>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
