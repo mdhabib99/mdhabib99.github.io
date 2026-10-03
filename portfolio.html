@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Md. Habibur Rahman | DevOps Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f8fafc; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white">
+
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md z-50 border-b border-slate-200 shadow-sm transition-all">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 font-bold text-xl tracking-tight text-slate-900">
+                    Habib<span class="text-brand-500">.</span>DevOps
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#about" class="text-slate-600 hover:text-brand-600 font-medium transition-colors">Summary</a>
+                    <a href="#expertise" class="text-slate-600 hover:text-brand-600 font-medium transition-colors">Expertise</a>
+                    <a href="#experience" class="text-slate-600 hover:text-brand-600 font-medium transition-colors">Experience</a>
+                    <a href="#projects" class="text-slate-600 hover:text-brand-600 font-medium transition-colors">Projects</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button class="text-slate-600 hover:text-brand-600 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="hero" class="pt-32 pb-20 md:pt-40 md:pb-28 bg-slate-900 text-white relative overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-brand-600/20 blur-3xl"></div>
+            <div class="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-blue-600/20 blur-3xl"></div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center md:text-left flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-2/3">
+                <div class="inline-block px-3 py-1 bg-brand-500/20 text-brand-300 rounded-full text-sm font-semibold tracking-wide mb-6 border border-brand-500/30">
+                    <i class="fas fa-rocket mr-2"></i> SODFC Certified Professional
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">
+                    Hello, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-blue-300">Md. Habibur Rahman</span>
+                </h1>
+                <h2 class="text-xl md:text-2xl text-slate-300 mb-6 font-light">
+                    DevOps Engineer | Cloud Infrastructure | Platform Operations
+                </h2>
+                <div class="flex flex-wrap justify-center md:justify-start gap-4 text-sm font-medium mb-8 text-slate-400">
+                    <span class="flex items-center"><i class="fas fa-map-marker-alt mr-2 text-brand-400"></i> Dhaka, Bangladesh</span>
+                    <span class="flex items-center"><i class="fas fa-globe mr-2 text-brand-400"></i> mdhabib99.github.io/Portfolio-Habib.html</span>
+                    <span class="flex items-center"><i class="fas fa-language mr-2 text-brand-400"></i> English (C1) & Bengali (Native)</span>
+                </div>
+                <div class="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
+                    <a href="#expertise" class="px-8 py-3 bg-brand-500 hover:bg-brand-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-brand-500/30 transition-all text-center">
+                        View Core Expertise
+                    </a>
+                    <a href="#experience" class="px-8 py-3 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-lg transition-all border border-slate-700 text-center">
+                        Professional Journey
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/3 flex justify-center">
+                <div class="w-56 h-56 md:w-72 md:h-72 rounded-full bg-gradient-to-tr from-brand-400 to-blue-600 p-1 shadow-2xl relative">
+                    <div class="w-full h-full rounded-full bg-slate-800 flex items-center justify-center border-4 border-slate-900">
+                        <span class="text-7xl text-white font-bold tracking-tighter">HR</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center mb-8">
+                <div class="h-1 w-12 bg-brand-500 rounded-full mr-4"></div>
+                <h2 class="text-3xl font-bold text-slate-900">Professional Summary</h2>
+            </div>
+            <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 shadow-sm text-lg text-slate-600 leading-relaxed text-justify">
+                Results-driven DevOps and Platform Operations professional with <strong>5+ years of experience</strong> spanning cloud infrastructure management, enterprise SaaS platforms, mobile device management (MDM), and CI/CD-aligned software delivery. Holds <strong>Scrum for Ops and DevOps Fundamentals Certified (SODFC)</strong> and Microsoft Azure Fundamentals certifications. Proven track record managing large-scale national ICT projects (BBS Population Census, BBS Economic Census), implementing VMware Workspace One MDM pipelines, deploying Odoo ERP systems, and integrating observability through Power BI and Tableau dashboards. Experienced in Docker-based containerization, Python and JavaScript automation scripting, PostgreSQL databases, and cross-functional team collaboration across engineering, QA, and stakeholder groups. Committed to building reliable, automated, and scalable infrastructure solutions.
+            </div>
+        </div>
+    </section>
+
+    <section id="expertise" class="py-20 bg-slate-50 border-y border-slate-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center mb-12">
+                <div class="h-1 w-12 bg-brand-500 rounded-full mr-4"></div>
+                <h2 class="text-3xl font-bold text-slate-900">Core Engineering Expertise</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <!-- AWS Card -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 hover:shadow-lg hover:border-orange-300 transition-all group">
+                    <div class="w-14 h-14 bg-orange-50 text-orange-500 rounded-xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fab fa-aws"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Senior DevOps - AWS</h3>
+                    <div class="flex items-center gap-2 mb-4 bg-slate-50 px-3 py-1.5 rounded-md w-max border border-slate-100">
+                        <span class="text-xs font-semibold text-slate-500">Proficiency</span>
+                        <div class="flex gap-1">
+                            <i class="fas fa-star text-orange-400 text-xs"></i>
+                            <i class="fas fa-star text-orange-400 text-xs"></i>
+                            <i class="fas fa-star text-orange-400 text-xs"></i>
+                            <i class="fas fa-star text-orange-400 text-xs"></i>
+                            <i class="fas fa-star-half-alt text-orange-400 text-xs"></i>
+                        </div>
+                        <span class="text-xs font-bold text-slate-700">9/10</span>
+                    </div>
+                    <p class="text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-4">
+                        Highly proficient in designing, deploying, and maintaining scalable AWS infrastructure. Capable of leveraging core services to build resilient cloud-native architectures that meet enterprise workload demands.
+                    </p>
+                </div>
+
+                <!-- Kubernetes Card -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 hover:shadow-lg hover:border-blue-300 transition-all group">
+                    <div class="w-14 h-14 bg-blue-50 text-blue-500 rounded-xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-dharmachakra"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-4">Kubernetes Stateful Ops</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-4">
+                        Designed and maintained K8s clusters running stateful applications like persistent databases (PostgreSQL, MongoDB) and message brokers (Kafka).
+                    </p>
+                    <ul class="text-xs text-slate-600 mt-4 space-y-2">
+                        <li class="flex items-start"><i class="fas fa-check text-brand-500 mr-2 mt-0.5"></i> Utilized <strong>StatefulSets</strong> for stable network identities and ordered deployment.</li>
+                        <li class="flex items-start"><i class="fas fa-check text-brand-500 mr-2 mt-0.5"></i> Configured PVs and PVCs for reliable, decoupled storage.</li>
+                        <li class="flex items-start"><i class="fas fa-check text-brand-500 mr-2 mt-0.5"></i> Implemented robust automated backup and disaster recovery strategies.</li>
+                    </ul>
+                </div>
+
+                <!-- Terraform Card -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 hover:shadow-lg hover:border-purple-300 transition-all group">
+                    <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-cubes"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-4">Terraform Automation</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-4">
+                        Regularly create custom Terraform modules to standardize infrastructure provisioning and enforce <strong>Infrastructure as Code (IaC)</strong> best practices.
+                    </p>
+                    <ul class="text-xs text-slate-600 mt-4 space-y-2">
+                        <li class="flex items-start"><i class="fas fa-check text-brand-500 mr-2 mt-0.5"></i> Abstracted resources into reusable modules (VPCs, EKS, secure RDS).</li>
+                        <li class="flex items-start"><i class="fas fa-check text-brand-500 mr-2 mt-0.5"></i> Drastically reduces code duplication and simplifies version control.</li>
+                        <li class="flex items-start"><i class="fas fa-check text-brand-500 mr-2 mt-0.5"></i> Ensures security, tagging, and compliance guardrails are consistently applied.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-bold text-slate-900 mb-8 text-center">Comprehensive Skillset</h3>
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-200">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="font-bold text-slate-900 mb-4 flex items-center"><i class="fas fa-cloud text-brand-500 mr-2 w-5"></i>Cloud & Platforms</h4>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li>Microsoft Azure (VPS, Fundamentals)</li>
+                            <li>Google Cloud</li>
+                            <li>VMware Workspace One</li>
+                            <li>Microsoft Intune, Android Enterprise</li>
+                            <li>Walton MDM enrollment & compliance</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 mb-4 flex items-center"><i class="fas fa-tools text-brand-500 mr-2 w-5"></i>DevOps & CI/CD</h4>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li>Git, GitHub, Docker</li>
+                            <li>Jira, MS Project</li>
+                            <li>Scrum/Agile workflows</li>
+                            <li>SODFC Certified Operations</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 mb-4 flex items-center"><i class="fas fa-code text-brand-500 mr-2 w-5"></i>IaC & Scripting</h4>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li>Python, JavaScript</li>
+                            <li>Bash scripting, XML</li>
+                            <li>PostgreSQL</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 mb-4 flex items-center"><i class="fas fa-chart-bar text-brand-500 mr-2 w-5"></i>Monitoring & BI</h4>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li>Power BI Dashboards</li>
+                            <li>Tableau Operational KPIs</li>
+                            <li>Data visualization & reporting</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 mb-4 flex items-center"><i class="fas fa-server text-brand-500 mr-2 w-5"></i>ERP & Web Tech</h4>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li>Odoo 16 (OWL, Python, XML)</li>
+                            <li>SAP-adjacent ERP & POS systems</li>
+                            <li>React.js, Next.js, Django, REST APIs</li>
+                            <li>HTML, CSS, Bootstrap</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 mb-4 flex items-center"><i class="fas fa-database text-brand-500 mr-2 w-5"></i>Databases & OS</h4>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li>PostgreSQL, MySQL</li>
+                            <li>Redis (familiar)</li>
+                            <li>Linux (Ubuntu), Windows, macOS</li>
+                            <li>Collaboration: MS365, VS Code</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center mb-12">
+                <div class="h-1 w-12 bg-brand-500 rounded-full mr-4"></div>
+                <h2 class="text-3xl font-bold text-slate-900">Professional Experience</h2>
+            </div>
+
+            <div class="relative border-l-2 border-slate-200 ml-4 md:ml-8 space-y-12">
+                <!-- Job 1 -->
+                <div class="relative pl-8 md:pl-12">
+                    <div class="absolute -left-[9px] top-1 h-4 w-4 rounded-full bg-brand-500 ring-4 ring-brand-50"></div>
+                    <div class="bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-100 hover:shadow-md transition-shadow">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
+                            <div>
+                                <h3 class="text-2xl font-bold text-slate-900">Sr. Deputy Assistant Director - ICT</h3>
+                                <h4 class="text-brand-600 font-semibold text-lg">Walton Hi-Tech Industries PLC</h4>
+                                <p class="text-slate-500 text-sm"><i class="fas fa-map-marker-alt mr-1"></i> Dhaka, Bangladesh</p>
+                            </div>
+                            <div class="px-4 py-1.5 bg-white text-slate-600 text-sm rounded-full border border-slate-200 font-semibold shadow-sm w-max h-max">
+                                August 2021 - Present
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-6 mt-6">
+                            <div>
+                                <h5 class="font-bold text-slate-800 mb-2">Cloud & Infrastructure Management</h5>
+                                <ul class="list-none space-y-2 text-slate-600 text-sm">
+                                    <li class="flex items-start"><i class="fas fa-check text-brand-400 mt-1 mr-3"></i> Managed enterprise MDM platforms (VMware Workspace One, Microsoft Intune, Walton MDM) covering device enrollment, compliance policies, and admin workflows.</li>
+                                    <li class="flex items-start"><i class="fas fa-check text-brand-400 mt-1 mr-3"></i> Led national-scale ICT infrastructure projects (BBS Population Census and BBS Economic Census), coordinating hardware provisioning and software deployment.</li>
+                                    <li class="flex items-start"><i class="fas fa-check text-brand-400 mt-1 mr-3"></i> Specialized in VMware endpoint management and enterprise SaaS solutions, managing large device fleets with automated policy enforcement.</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h5 class="font-bold text-slate-800 mb-2">DevOps & Platform Operations</h5>
+                                <ul class="list-none space-y-2 text-slate-600 text-sm">
+                                    <li class="flex items-start"><i class="fas fa-check text-brand-400 mt-1 mr-3"></i> Acted as Product Owner between stakeholders and engineering teams, defining acceptance criteria using Agile/Scrum methodologies.</li>
+                                    <li class="flex items-start"><i class="fas fa-check text-brand-400 mt-1 mr-3"></i> Led feature development end-to-end: requirement analysis, QA review, and post-launch evaluation ensuring production-ready delivery.</li>
+                                    <li class="flex items-start"><i class="fas fa-check text-brand-400 mt-1 mr-3"></i> Collaborated with engineering, UI/UX, and QA teams using Jira, GitHub, and MS Project to streamline release cycles.</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h5 class="font-bold text-slate-800 mb-2">Monitoring, Observability & ERP</h5>
+                                <ul class="list-none space-y-2 text-slate-600 text-sm">
+                                    <li class="flex items-start"><i class="fas fa-check text-brand-400 mt-1 mr-3"></i> Implemented Power BI and Tableau reporting dashboards for management visibility, reducing manual reporting time by 60%.</li>
+                                    <li class="flex items-start"><i class="fas fa-check text-brand-400 mt-1 mr-3"></i> Implemented and customized Odoo 16 ERP modules (POS, accounting, VAT/tax, payment gateways) using Python, XML, and OWL framework.</li>
+                                    <li class="flex items-start"><i class="fas fa-check text-brand-400 mt-1 mr-3"></i> Containerized internal tooling and services using Docker to ensure consistency across dev, staging, and production environments.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job 2 -->
+                <div class="relative pl-8 md:pl-12">
+                    <div class="absolute -left-[9px] top-1 h-4 w-4 rounded-full bg-slate-300 ring-4 ring-slate-100"></div>
+                    <div class="bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-100 hover:shadow-md transition-shadow">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
+                            <div>
+                                <h3 class="text-2xl font-bold text-slate-900">Technical Trainer - Web & Software Dev</h3>
+                                <h4 class="text-brand-600 font-semibold text-lg">LEDP, ICT Division, Government of Bangladesh</h4>
+                            </div>
+                            <div class="px-4 py-1.5 bg-white text-slate-600 text-sm rounded-full border border-slate-200 font-semibold shadow-sm w-max h-max">
+                                October 2020 - March 2021
+                            </div>
+                        </div>
+                        <ul class="list-none space-y-3 text-slate-600 text-sm mt-4">
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-slate-400 mt-1 mr-3 text-xs"></i> Developed and delivered comprehensive technical training courses in web development, programming, and software engineering.</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-slate-400 mt-1 mr-3 text-xs"></i> Covered HTML, CSS, JavaScript, Python, Django, PostgreSQL, and MySQL - coaching students through practical e-commerce project builds.</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-slate-400 mt-1 mr-3 text-xs"></i> Provided mentorship and troubleshooting support to students, fostering hands-on learning and technical problem-solving capabilities.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-20 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center mb-12">
+                <div class="h-1 w-12 bg-brand-500 rounded-full mr-4"></div>
+                <h2 class="text-3xl font-bold text-slate-900">Key Projects</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Project 1 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 hover:shadow-lg transition-all group">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-slate-900 group-hover:text-brand-600 transition-colors">1. PAI PAI POS & ERP System Implementation</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                        Implemented a comprehensive Point of Sale system with automated VAT/tax calculation and real-time reporting. Added new features and payment gateway integration; optimized workflow and ensured seamless retail business integration.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2.5 py-1 rounded border border-blue-100">Odoo 16</span>
+                        <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2.5 py-1 rounded border border-blue-100">OWL</span>
+                        <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2.5 py-1 rounded border border-blue-100">Python</span>
+                        <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2.5 py-1 rounded border border-blue-100">PostgreSQL</span>
+                        <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2.5 py-1 rounded border border-blue-100">XML</span>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 hover:shadow-lg transition-all group">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-slate-900 group-hover:text-brand-600 transition-colors">2. Mobile Device Management (MDM) Platform</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                        Gathered and analyzed MDM requirements; created PRD with competitive analysis. Managed enrollment, compliance policies, and admin workflows for enterprise fleets. Collaborated with UX/UI teams to design management interfaces.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="text-xs font-mono bg-purple-50 text-purple-700 px-2.5 py-1 rounded border border-purple-100">VMware Workspace One</span>
+                        <span class="text-xs font-mono bg-purple-50 text-purple-700 px-2.5 py-1 rounded border border-purple-100">Intune</span>
+                        <span class="text-xs font-mono bg-purple-50 text-purple-700 px-2.5 py-1 rounded border border-purple-100">Walton MDM</span>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 hover:shadow-lg transition-all group">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-slate-900 group-hover:text-brand-600 transition-colors">3. Analytics & BI Dashboards</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                        Designed and implemented operational KPI dashboards for production and logistics data visibility. Integrated reporting for management decision-support across enterprise data sets, significantly reducing manual reporting time.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="text-xs font-mono bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded border border-emerald-100">Power BI</span>
+                        <span class="text-xs font-mono bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded border border-emerald-100">Tableau</span>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 hover:shadow-lg transition-all group">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-slate-900 group-hover:text-brand-600 transition-colors">4. E-Commerce Web Platform</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                        Designed UX flows and PRD flowcharts for Walton product pages; implemented product filtering, cart, and order management. Integrated SSL Commerz payment gateway, review systems, and email notifications for authenticated users.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="text-xs font-mono bg-orange-50 text-orange-700 px-2.5 py-1 rounded border border-orange-100">React.js</span>
+                        <span class="text-xs font-mono bg-orange-50 text-orange-700 px-2.5 py-1 rounded border border-orange-100">Next.js</span>
+                        <span class="text-xs font-mono bg-orange-50 text-orange-700 px-2.5 py-1 rounded border border-orange-100">Django</span>
+                        <span class="text-xs font-mono bg-orange-50 text-orange-700 px-2.5 py-1 rounded border border-orange-100">PostgreSQL</span>
+                        <span class="text-xs font-mono bg-orange-50 text-orange-700 px-2.5 py-1 rounded border border-orange-100">SSL Commerz</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-slate-900 text-white border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <!-- Certifications -->
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-8 flex items-center">
+                        <i class="fas fa-award text-brand-400 mr-3"></i> Licenses & Certifications
+                    </h2>
+                    <ul class="space-y-4">
+                        <li class="flex items-start bg-slate-800/50 p-4 rounded-lg border border-slate-700">
+                            <i class="fas fa-certificate text-brand-400 mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="font-bold text-slate-100">Scrum for Ops & DevOps Fundamentals (SODFC)</h4>
+                                <p class="text-xs text-slate-400 mt-1">SCRUMstudy</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start bg-slate-800/50 p-4 rounded-lg border border-slate-700">
+                            <i class="fas fa-certificate text-brand-400 mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="font-bold text-slate-100">Microsoft Certified: Azure Fundamentals</h4>
+                                <p class="text-xs text-slate-400 mt-1">Microsoft</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start bg-slate-800/50 p-4 rounded-lg border border-slate-700">
+                            <i class="fas fa-certificate text-brand-400 mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="font-bold text-slate-100">VMware Certified IT Professional</h4>
+                                <p class="text-xs text-slate-400 mt-1">Workspace One & Endpoint Management</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start bg-slate-800/50 p-4 rounded-lg border border-slate-700">
+                            <i class="fas fa-certificate text-brand-400 mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="font-bold text-slate-100">Android Enterprise Certified Professional</h4>
+                            </div>
+                        </li>
+                        <li class="flex items-start bg-slate-800/50 p-4 rounded-lg border border-slate-700">
+                            <i class="fas fa-certificate text-brand-400 mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="font-bold text-slate-100">Six Sigma Yellow Belt (SSYBM)</h4>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Education & References -->
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-8 flex items-center">
+                        <i class="fas fa-graduation-cap text-brand-400 mr-3"></i> Education
+                    </h2>
+                    <div class="bg-gradient-to-br from-slate-800 to-slate-800/50 p-6 rounded-xl border border-slate-700 relative overflow-hidden mb-10">
+                        <div class="absolute top-4 right-4 opacity-10 text-6xl">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Bachelor of Science in EEE</h3>
+                        <h4 class="text-brand-400 font-medium mb-4 text-sm">Hajee Mohammad Danesh Science & Technology University (HSTU)</h4>
+                        <div class="flex items-center text-sm text-slate-400">
+                            <i class="far fa-calendar-alt mr-2"></i> Jan 2016 - Dec 2019
+                        </div>
+                        <div class="flex items-center text-sm text-slate-400 mt-2">
+                            <i class="fas fa-map-marker-alt mr-2"></i> Dinajpur, Bangladesh
+                        </div>
+                    </div>
+                    
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                        <i class="fas fa-address-book text-brand-400 mr-3"></i> Reference
+                    </h2>
+                    <div class="bg-slate-800/50 p-5 rounded-lg border border-slate-700">
+                        <h3 class="font-bold text-slate-100">Sabir Khan Akash</h3>
+                        <p class="text-sm text-slate-400 mt-1">Software Engineer | TechnoNext Software Limited</p>
+                        <p class="text-sm text-brand-300 mt-2 flex items-center">
+                            <i class="fas fa-phone mr-2 text-xs"></i> +880 1794-598178
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-950 py-8 border-t border-black">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-4">
+            <p class="text-slate-500 text-sm">
+                &copy; 2026 Md. Habibur Rahman. All Rights Reserved.
+            </p>
+            <div class="flex space-x-4">
+                <a href="https://mdhabib99.github.io/Portfolio-Habib.html" target="_blank" class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-brand-600 hover:border-brand-500 transition-all">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
