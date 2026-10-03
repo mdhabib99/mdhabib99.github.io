@@ -1,9 +1,9 @@
-name: Deploy static content to Pages
+name: Deploy Portfolio to Pages
 
 on:
   push:
-    branches: ["main"] # main ব্রাঞ্চে পুশ হলে CI রান করবে
-  workflow_dispatch: # ম্যানুয়ালি রান করার জন্য
+    branches: ["main"]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -24,13 +24,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         
+    
+      - name: Make Portfolio the Main Page
+        run: cp portfolio.html index.html
+        
       - name: Setup Pages
         uses: actions/configure-pages@v5
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.' # আপনার index.html যে ফোল্ডারে আছে (রুট ডিরেক্টরি হলে '.')
+          path: '.'
           
       - name: Deploy to GitHub Pages
         id: deployment
